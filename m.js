@@ -1,4 +1,10 @@
 if (Meteor.isClient) {
+  Accounts.ui.config({
+    requestPermissions: {
+      github: ['user', 'repo']
+    },
+    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+  });
 
   Template.newSource.events({
     'click #submit-new-source' : function(ev, page) {
