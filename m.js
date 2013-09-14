@@ -87,9 +87,9 @@ if (Meteor.isClient) {
 
         ev.stopPropagation();
       },
-      'keydown #annotation' : function(ev) {
+      'keydown #annotation, click #annotateBtn' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
-        if ( keyCode == 13 ) {
+        if ( keyCode == 13 || ev.type == "click") {
           Annotations.insert({ 
             author: Meteor.user(), 
             file: Session.get('fileID'),
