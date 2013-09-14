@@ -38,8 +38,6 @@ if (Meteor.isClient) {
             Meteor.Router.to('/show/' + result);
           }
         });
-
-
       }
     })
 

@@ -9,14 +9,13 @@ body {
 }
 
 header {
-    margin-bottom: 100px;
     padding: 10px;
     ul.actions {
         list-style: none;
         float: right;
         li {
             float: left;
-            margin: 0 10px;
+            margin: 0 5px;
             color: lighten(@purple, 10%);
             span {
                 color: lighten(@purple, 10%);
@@ -25,45 +24,68 @@ header {
                     color: white;
                 }
             }
+
+            #user{
+                min-height:50px;
+                min-width:50px;
+                #propic {
+                    @size: 25px;
+                    width: @size;
+                    height: @size;
+                    border-radius: @size / 2;
+                }
+                a {
+                    color: lighten(@purple, 10%);
+                    font-weight: bold;
+                }
+            }
         }
     }    
 }
 
-#user{
-    min-height:50px;
-    min-width:50px;
-    a {
-        color: @black;
-    }
-}
-
 .newFile {
-    textarea {
-        width: 100%;
-        height: 500px;
-        background: @black;
-        color: white;
-        text-shadow: 0 1px rgba(0,0,0,0.3);
-        font-family: Consolas, Monaco, 'Andale Mono', monospace;
-        direction: ltr;
-        text-align: left;
-        white-space: pre;
-        word-spacing: normal;
-        
-        -moz-tab-size: 4;
-        -o-tab-size: 4;
-        tab-size: 4;
-        
-        -webkit-hyphens: none;
-        -moz-hyphens: none;
-        -ms-hyphens: none;
-        hyphens: none;
-        padding: 10px;
-        &:focus, &:active {
-            border: none;
-            outline: none;
+    .text-container {
+        position: relative;
+        textarea {
+            width: 100%;
+            height: 500px;
+            background: @black;
+            color: white;
+            text-shadow: 0 1px rgba(0,0,0,0.3);
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            direction: ltr;
+            text-align: left;
+            white-space: pre;
+            word-spacing: normal;
+            
+            -moz-tab-size: 4;
+            -o-tab-size: 4;
+            tab-size: 4;
+            
+            -webkit-hyphens: none;
+            -moz-hyphens: none;
+            -ms-hyphens: none;
+            hyphens: none;
+            padding: 10px;
+            &:focus, &:active {
+                border: none;
+                outline: none;
+            }
+        }
+
+        .function {
+            background: url(/i/function-icons.png);
+            width: 32px;
+            height: 37px;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            padding: 10px;
         }
     }
+
 }
 
 .code-container {
@@ -163,3 +185,23 @@ header {
         }
     }
 }
+
+.function.save { background-position: -5px top; }
+.function.enabled.save { background-position: -5px center; }
+.function.enabled.save:hover { background-position: -5px bottom; }
+
+.function.new { background-position: -42px top; }
+.function.enabled.new { background-position: -42px center; }
+.function.enabled.new:hover { background-position: -42px bottom; }
+
+.function.duplicate { background-position: -79px top; }
+.function.enabled.duplicate { background-position: -79px center; }
+.function.enabled.duplicate:hover { background-position: -79px bottom; }
+
+.function.raw { background-position: -116px top; }
+.function.enabled.raw { background-position: -116px center; }
+.function.enabled.raw:hover { background-position: -116px bottom; }
+
+.function.twitter { background-position: -153px top; }
+.function.enabled.twitter { background-position: -153px center; }
+.function.enabled.twitter:hover { background-position: -153px bottom; }
