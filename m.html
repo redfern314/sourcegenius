@@ -52,18 +52,16 @@
 
 
 <template name="home">
+  <div id="sources">
   {{#if loggedIn}}
-    <div id="sources">
       {{#each userSources}}
         {{> sourceSynopsisTemplate }}
       {{/each}}
       {{#each sharedSources }}
         {{> sourceSynopsisTemplate }}
       {{/each }}
-    </div>
-  {{ else }}
-    Not logged in!
   {{/if}}
+  </div>
 </template>
 
 <template name='sourceSynopsisTemplate'>
