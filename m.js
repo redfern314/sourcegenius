@@ -218,7 +218,7 @@ if (Meteor.isClient) {
     	resultsArray = [];
     	_.each(lines, function(line) {
         var cssClasses = "";
-        if (line != "") {
+        if (line.trim() != "") {
           cssClasses += "line";
           if (Annotations.find({
                   'line': resultsArray.length, 
