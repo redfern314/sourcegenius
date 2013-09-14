@@ -10,7 +10,7 @@
 				<div class="row">
 				    <div class="col-md-12">
                         <ul class="actions left">
-                            <li><a href="/new"><span class="glyphicon glyphicon-home"></span></a></li>
+                            <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
                             <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
                         </ul>
 				        <ul class="actions right">
@@ -131,7 +131,7 @@
       {{# if editing this }}
       {{ else }}
       {{#if canEdit this}}
-          <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit"></span></a>
+          <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit" data-id='{{ _id }}'></span></a>
       {{/if}}
       {{/if}}
       <div class="clear"></div>
