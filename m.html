@@ -61,19 +61,19 @@
 
 <template name="home">
   <div id="sources">
-  {{#if loggedIn}}
+    {{#if loggedIn}}
       {{#each userSources}}
         {{> sourceSynopsisTemplate }}
       {{/each}}
       {{#each sharedSources }}
         {{> sourceSynopsisTemplate }}
       {{/each }}
-  {{/if}}
+    {{/if}}
   </div>
 </template>
 
 <template name='sourceSynopsisTemplate'>
-  <a href='/show/{{_id}}'><div>{{ prettifyTitle title }} by {{ authorName author }}</div></a>
+  <a href='/show/{{_id}}'><img class="author" src="{{ authorPhoto author }}"></img><span class="title">{{ prettifyTitle title }}</span> </a>
 </template>
 
 <template name="github">

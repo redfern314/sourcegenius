@@ -11,7 +11,13 @@ if (Meteor.isClient) {
 
     Meteor.startup(function() {
       Meteor.Router.add({
-        '/': 'landing',
+        '/': function() {
+          if (Meteor.user()) {
+            return 'home';
+          } else {
+            return 'landing';
+          }
+        },
         '/home': 'home',
         '/new': 'newFile',
         '/github': 'github',
@@ -157,8 +163,8 @@ if (Meteor.isClient) {
       return title ? title : 'untitled'
     }
 
-   Template.sourceSynopsisTemplate.authorName = function(id) {
-     return Meteor.users.find(id).fetch()[0].profile.username;
+   Template.sourceSynopsisTemplate.authorPhoto = function(id) {
+     return Meteor.users.find(id).fetch()[0].profile.propic;
    }
 
     Template.home.creatingNewFile = function() {

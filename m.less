@@ -9,22 +9,42 @@ body {
     background: @purple;
 }
 
-#sources a:hover {
-    text-decoration: none;
-    color: white;
+#sources {
+    a {
+        width: 100%;
+        font-size: 20px;
+        color: lighten(@purple, 20%);
+        line-height: 50px;
+        display: block;
+        padding: 0 10px;
+        &:hover {
+            text-decoration: none;
+            background: lighten(@purple, 5%);
+            span.title {
+                color: white;
+            }
+        }
+        span.title {
+            color: lighten(@purple, 30%);
+            margin: 0;
+            margin-left: 10px;
+        }
+        img.author {
+            @size: 30px;
+            height: @size;
+            width: @size;
+            border-radius: @size / 2; 
+            margin-bottom: 1px;
+        }
+    }
+    a:hover {
+    }
 }
 
 #user #signin:hover {
     text-decoration: none;
     color: lighten(@purple, 40%);
 }
-
-#sources a {
-    font-size: 20px;
-    color: lighten(@purple, 20%);
-    line-height: 50px;
-}
-
 #annotateBtn {
     background-color: @raspberry;
 }
