@@ -5,7 +5,8 @@ if (Meteor.isClient) {
     Session.set("creatingNewFile", false);
     Meteor.startup(function() {
       Meteor.Router.add({
-        '/': 'home',
+        '/': 'landing',
+        '/home': 'home',
         '/new': 'newFile',
         '/github': 'github',
         '/show/:id': function(id) {
