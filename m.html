@@ -43,6 +43,29 @@
     </div>
 </template>
 
+
+<template name="home">
+  {{#if loggedIn}}
+    <div id="your-sources">
+      {{#each userSources}}
+        {{> userSourceTemplate }}
+      {{/each}}
+     </div>
+    <div id="shared-with-you">
+      {{#each sharedSources }}
+        {{> sharedSourceTemplate }}
+      {{/each }}
+    </div>
+    {{> newFile}}
+  {{ else }}
+    Not logged in!
+  {{/if}}
+</template>
+
+<template name='userSourceTemplate'>
+  <a href='/show/{{_id}}'><div>{{ name }}</div></a>
+</template>
+
 <template name="github">
 	<div class="row github">
     	<div class="col-md-12">
@@ -55,9 +78,14 @@
     </div>
 </template>
 
+<template name='sharedSourceTemplate'>
+  <a href='/show/{{_id}}'><div>{{ name }}</div></a>
+</template>  
+
 <template name="newFile">
     <div class="row newFile">
     	<div class="col-md-12">
+            <input style='width:100%; margin-bottom:10px;' id='title' place='Title Your Source'></input>
             <div class="text-container">
                 <textarea width='500' class="language-any" id="newFileEntry"></textarea>
                 <div class="function save enabled" id='submit-new-file'></div>
@@ -125,21 +153,7 @@
     {{/isolate}}
 </template>
 
-<template name="sources">
-  {{#if viewing }}
-    {{> currentSource viewing }}
-  {{ else }}
-    <div id="your-sources">
-      {{#each userSources}}
-        {{> userSourceTemplate }}
-      {{/each}}
-     </div>
-    <div id="shared-with-you">
-      {{#each sharedSources }}
-        {{> sharedSourceTemplate }}
-      {{/each }}
-    </div>
-    {{> newSource}}
-  {{/if }}
+<template name="signIn">
+	{{ loginButtons }}
 </template>
 

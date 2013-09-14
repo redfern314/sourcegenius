@@ -2,10 +2,10 @@ File = new Meteor.Collection("files");
 Annotations = new Meteor.Collection('annotations');
 
 if (Meteor.isClient) {
-  
+    Session.set("creatingNewFile", false);
     Meteor.startup(function() {
       Meteor.Router.add({
-        '/': 'newFile',
+        '/': 'home',
         '/new': 'newFile',
         '/github': 'github',
         '/show/:id': function(id) {
@@ -20,13 +20,21 @@ if (Meteor.isClient) {
 
     Template.newFile.events({
       'click #submit-new-file' : function(ev, page) {
-        var textbox = page.find('textarea');
+        var textbox = $('#newFileEntry');
+        var titlebox = $('#title');
         var file = $(textbox).val();
+        var title = $(titlebox).val();
         if (file === "") return;
 
         var language = hljs.highlightAuto(file).language;
 
-        File.insert({ 'file' : $.trim(file), shared: [], author: Meteor.userId, language: language }, function(error, result) {
+        File.insert({ 
+          'file' : $.trim(file), 
+          shared: [], 
+          author: Meteor.userId, 
+          language: language,
+          title: title
+        }, function(error, result) {
           if (error) {
             alert('An unknown error occurred');
           } else {
@@ -115,6 +123,13 @@ if (Meteor.isClient) {
       }
     });
 
+    Template.user.loggedIn = Template.home.loggedIn = function() {
+      return Meteor.userId();
+    }
+
+    Template.home.creatingNewFile = function() {
+      return Session.get('creatingNewFile');
+    }
 
     Template.annotation.canEdit = function(annotation) {
       return Meteor.userId() == annotation.author._id;
@@ -197,10 +212,6 @@ if (Meteor.isClient) {
     return SessionAmplify.get("loggedIn");
   }
 
-  Template.sources.viewing = function() {
-    return Session.get('viewing') ? true : false;
-  }
-
   Template.show.splitLines = function() {
   	var file = File.find(Session.get('fileID')).fetch()[0];
   	var lines = File.find(Session.get('fileID')).fetch()[0].file.split("\n"),
@@ -228,12 +239,12 @@ if (Meteor.isClient) {
     Prism.highlightAll();
   }
 
-  Template.sources.userSources = function() {
-    return Source.find({ author: Meteor.userId() }).fetch();
+  Template.home.userSources = function() {
+    return File.find({ author: Meteor.userId() }).fetch();
   }
 
-  Template.sources.sharedSources = function() {
-    var sources = Source.find().fetch(),
+  Template.home.sharedSources = function() {
+    var sources = File.find().fetch(),
       resultsArray = [];
     for (var i=0, l=sources.length; i<l; i++) {
       if (_.contains(sources[i].shared, Meteor.userId() )) {
