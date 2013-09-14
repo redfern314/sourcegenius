@@ -9,11 +9,15 @@ body {
 }
 
 header {
+    margin-bottom: 100px;
+    padding: 10px;
     ul.actions {
-        padding: 10px;
         list-style: none;
         float: right;
         li {
+            float: left;
+            margin: 0 10px;
+            color: lighten(@purple, 10%);
             span {
                 color: lighten(@purple, 10%);
                 cursor: pointer;
@@ -32,7 +36,6 @@ header {
 }
 
 .code-container {
-    margin-top: 100px;
     .snippet {
         background: @black;
         padding: 20px;

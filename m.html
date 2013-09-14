@@ -11,6 +11,13 @@
 				    <div class="col-md-12">
 				        <ul class="actions">
 				            <li><span class="glyphicon glyphicon-plus"></span></li>
+				            <li>
+								{{#if loggedIn }}
+								{{> sources }}
+								{{ else }}
+								{{ loginButtons }}
+								{{/if }}
+				            </li>
 				        </ul>
 				    </div>
 				</div>
@@ -42,7 +49,6 @@
 			<button class='btn' id='submit-new-file'>Submit</button>
     	</div>
     </div>
-</template>
 
 <template name="annotation">
     <div class="annotation">
@@ -99,3 +105,29 @@
 	</div>
 </template>
 
+<template name="sources">
+  {{#if viewing }}
+    {{> currentSource viewing }}
+  {{ else }}
+    <div id="your-sources">
+      {{#each userSources}}
+        {{> userSourceTemplate }}
+      {{/each}}
+     </div>
+    <div id="shared-with-you">
+      {{#each sharedSources }}
+        {{> sharedSourceTemplate }}
+      {{/each }}
+    </div>
+    {{> newSource}}
+  {{/if }}
+</template>
+
+<template name="userSourceTemplate">
+</template>
+
+<template name="sharedSourceTemplate">
+</template>
+
+<template name="currentSource">
+</template>

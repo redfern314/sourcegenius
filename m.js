@@ -10,12 +10,14 @@ if (Meteor.isClient) {
   Template.newFile.events({
     'click #submit-new-file' : function(ev, page) {
       var $textbox = page.find('textarea');
-      var file = $textbox.val();
+      var file = $(textbox).val();
       File.insert({ 'file' : file, shared: [], author: Meteor.userId }, function(error, result) {
         if (error) {
           alert('An unknown error occurred');
         } else {
-          $textbox.val('');
+          console.log(result);
+          Session.set('viewing', result._id);
+          $(textbox).val('');
         }
       });
     }
@@ -30,6 +32,24 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.sources.viewing = function() {
+    return Session.get('viewing') ? true : false;
+  }
+
+  Template.sources.userSources = function() {
+    return Source.find({ author: Meteor.userId() }).fetch();
+  }
+
+  Template.sources.sharedSources = function() {
+    var sources = Source.find().fetch(),
+      resultsArray = [];
+    for (var i=0, l=sources.length; i<l; i++) {
+      if (_.contains(sources[i].shared, Meteor.userId() )) {
+        resultsArray.push(sources[i]);
+      }
+    }
+    return resultsArray;
+  }
 }
 
 if (Meteor.isServer) {
