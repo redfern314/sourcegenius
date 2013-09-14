@@ -12,10 +12,9 @@ if (Meteor.isClient) {
       var source = $textbox.val();
       Source.insert({ 'source' : source, shared: [], author: Meteor.userId }, function(error, result) {
         if (error) {
-          $textbox.val('');
           alert('An unknown error occurred');
         } else {
-          
+          $textbox.val('');
         }
       });
     }
