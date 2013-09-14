@@ -124,7 +124,7 @@ if (Meteor.isClient) {
     });
 
     Template.user.loggedIn = Template.home.loggedIn = function() {
-      return Meteor.userId();
+      return SessionAmplify.get("loggedIn");
     }
 
     Template.home.creatingNewFile = function() {
@@ -176,9 +176,9 @@ if (Meteor.isClient) {
 
   Template.user.events({
     'click #signin,#propic' : function(ev, page) {
-      var loggedIn = SessionAmplify.get("loggedIn");
-      if(loggedIn) {
+      if(SessionAmplify.get("loggedIn")) {
         SessionAmplify.set("loggedIn",false);
+        Meteor.logout();
       } else {
         Meteor.loginWithGithub({
           requestPermissions: ['user', 'public_repo']
@@ -216,7 +216,7 @@ if (Meteor.isClient) {
   }
 
   Template.user.loggedIn = function() {
-    return SessionAmplify.get("loggedIn");
+    return Meteor.userId();
   }
 
   Template.show.splitLines = function() {
@@ -225,7 +225,7 @@ if (Meteor.isClient) {
     	resultsArray = [];
     	_.each(lines, function(line) {
         var cssClasses = "";
-        if (line != "") {
+        if (line.trim() != "") {
           cssClasses += "line";
           if (Annotations.find({
                   'line': resultsArray.length, 
