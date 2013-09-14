@@ -5,6 +5,9 @@
 <body>
   {{ loginButtons }}
   {{> newSource}}
+
+  <div class='test-triangle'>
+  </div>
 </body>
 
 <template name="hello">
@@ -15,7 +18,9 @@
 </template>
 
 <template name="newSource">
-  <h1>Add new source code</h1>
-  <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
-  <button class='btn' id='submit-new-source'>Submit</button>
+  <div>
+    <h1>Add new source code</h1>
+    <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
+    <button class='btn' id='submit-new-source'>Submit</button>
+  </div>
 </template>
