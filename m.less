@@ -182,17 +182,34 @@ header {
         background: @black;
         color: white;
     }
+    .item-container {
+        position: relative;
+        span.glyphicon {
+            position: absolute;
+            top: 9px;
+            left: 10px;
+            color: lighten(@purple, 15%);
+        }
+        background: lighten(@purple, 5%);
+        &:hover {
+            background: lighten(@purple, 10%);
+            span {
+                color: white;
+            }
+        }
+    }
     .itemrow {
-        background: @black;
         color: white;
         height:35px;
         width:90%;
-        margin-bottom:15px;
-        margin-top:15px;
+        margin: 10px 0;
         padding-left:10px;
         padding-right:10px;
         vertical-align: middle;
         line-height: 35px;
+        cursor:pointer;
+        position: relative;
+        left: 25px;
     }
 }
 

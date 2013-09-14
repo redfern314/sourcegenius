@@ -90,11 +90,17 @@
     	<div class="col-md-12">
 	    	<div class="text-container">
 	        	{{#each repoitems}}
-	        		 <div class="itemrow">
-	            		{{name}}{{path}}
-	        		</div>
+                    <div class="item-container">
+
+                        {{#if type }}
+                            <span class="glyphicon glyphicon-{{#if  isDir type }}folder-open{{else}}file{{/if}}"></span>
+                        {{/if}}
+                        <div class="itemrow">
+                            {{name}}{{path}}
+                        </div>
+                    </div>
 	        	{{/each}}
-	        </div>
+            </div>
         </div>
     </div>
 </template>

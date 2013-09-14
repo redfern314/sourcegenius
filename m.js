@@ -9,6 +9,10 @@ if (Meteor.isClient) {
         return Meteor.Router.page() === "landing";
     });
 
+    Handlebars.registerHelper('isDir', function(type) {
+      return type === "tree";
+    })
+
     Meteor.startup(function() {
       Meteor.Router.add({
         '/': function() {
@@ -233,7 +237,8 @@ if (Meteor.isClient) {
   var getRepos = function(page) {
     // get repos from this user
     var username = $(page.find("#username"))[0].value;
-    HTTP.call("GET", "https://api.github.com/users/"+username+"/repos",
+    HTTP.call("GET", "https://api.github.com/users/"+username+"/repos?access_token="+
+              Meteor.user().services.github.accessToken,
       {params:{sort:"updated"}}, function (error, result) {
         if (result.statusCode === 200) {
           console.log(result);
@@ -246,7 +251,8 @@ if (Meteor.isClient) {
   }
 
   var getTree = function(user,repo,sha) {
-    HTTP.call("GET", "https://api.github.com/repos/"+user+"/"+repo+"/git/trees/"+sha,
+    HTTP.call("GET", "https://api.github.com/repos/"+user+"/"+repo+"/git/trees/"+sha+ "?access_token="+
+              Meteor.user().services.github.accessToken,
       function (error, result) {
         if (result.statusCode === 200) {
           console.log(result);
@@ -272,7 +278,8 @@ if (Meteor.isClient) {
   }
 
   var getRootSHA = function(user,repo) {
-    HTTP.call("GET", "https://api.github.com/repos/"+user+"/"+repo+"/commits",
+    HTTP.call("GET", "https://api.github.com/repos/"+user+"/"+repo+"/commits?access_token="+
+              Meteor.user().services.github.accessToken,
       function (error, result) {
         if (result.statusCode === 200) {
           console.log(result.data[0].sha);
