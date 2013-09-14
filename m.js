@@ -187,9 +187,19 @@ if (Meteor.isClient) {
       return file.author != Meteor.userId() && !_.contains(file.shared, Meteor.userId());
     }
 
+    Template.show.canUnwatch = function() {
+      var file = File.find(Session.get('fileID')).fetch()[0];
+      return file.author != Meteor.userId() && _.contains(file.shared, Meteor.userId());
+    }
+
     Template.show.events({
       'click #watch' : function(ev) {
         File.update(Session.get('fileID'), { $push: { shared: Meteor.userId() } });
+      },
+      'click #unwatch': function(ev) {
+        var file = File.find(Session.get('fileID')).fetch()[0];
+        file.shared.splice(file.shared.indexOf(Meteor.userId()))
+        File.update(file._id, { $set: { shared : file.shared } });
       }
     })
 
