@@ -30,6 +30,38 @@ body {
     background-color: @raspberry;
 }
 
+#index {
+    h1, h2 {
+        width: 100%;
+        text-align: center;
+    }
+    h1 {
+        @font-size: 80px;
+        margin-top: 200px;
+        font-size: @font-size;
+        .source {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            color: lighten(@purple, 10%);
+        }
+        .genius {
+            color: lighten(@purple, 30%);
+            font-size: @font-size + 10;
+        }
+    }
+    h2 {
+        @color: lighten(@purple, 5%);
+        color: @color;
+        a {
+            color: @color;
+            font-size: 40px;
+            display: block;
+            &:hover {
+                color: lighten(@color, 10%);
+            }
+        }
+    }
+}
+
 header {
     padding: 10px 0;
     ul.actions {
@@ -142,10 +174,6 @@ header {
         vertical-align: middle;
         line-height: 35px;
     }
-}
-
-.annotations {
-    display: none;
 }
 
 .newFile {
@@ -286,8 +314,8 @@ header {
                 border: none;
                 border-radius: 0;
                 margin: 0;
-                padding-top: 2px;
-                padding-bottom: 3px;
+                padding-top: 0;
+                padding-bottom: 0;
                 code {
                     padding: 0;
                     margin: 0;
@@ -301,11 +329,12 @@ header {
 
 
 .annotations {
+    display: none;
     @color: white;
     background: @color;
     position: absolute;
     z-index: 3;
-    padding: 40px;
+    padding: 20px;
     width: 400px;
     @border-size: 30px;
     @border-offset: 30px;
@@ -333,11 +362,14 @@ header {
         margin: 10px 0;
         textarea {
             width: 100%;
+            background: transparent;
+            padding: 0;
+            margin: 0;
         }
         .author {
             margin-top: 20px;
             float: right;
-            @size: 25px;
+            @size: 17px;
             img, .handle {
                 float: left;
                 margin: 0 auto;
