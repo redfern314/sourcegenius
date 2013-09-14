@@ -95,14 +95,15 @@ if (Meteor.isClient) {
       var file = Session.get('file'),
     	  lines = file.file.split("\n");
 
-      console.log("TESTTT");
-      console.log(file);
-
     	resultsArray = [];
     	_.each(lines, function(line) {
     		resultsArray.push({text: line, index: resultsArray.length});
     	});
     	return resultsArray;
+    }
+
+    Template.show.rendered = function() {
+      Prism.highlightAll();
     }
 
     Template.sources.userSources = function() {
