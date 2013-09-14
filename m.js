@@ -32,11 +32,19 @@ if (Meteor.isClient) {
             Meteor.Router.to('/show/' + result);
           }
         });
+      },
+
+      'keydown #newFileEntry' : function(ev, page) {
+        console.log(ev);
+        if(ev.keyCode==9) {
+          ev.preventDefault();
+          insertAtCaret("newFileEntry","    ");
+        }
       }
+
     });
 
     $(document).click(function() {
-      console.log("removing");
       $(".annotations").hide();
       Session.set('annotations', false);
     });
@@ -54,13 +62,17 @@ if (Meteor.isClient) {
         var lineId = $target.data('id');
         Session.set('lineAnnotationNumber', lineId);
 
-        var $line = $target.find('code');
+        var $line = $target.find('code'),
+          $container = $('.snippet');
+
+        $target.find('pre').addClass('selected');
 
         $('.annotations').css({
           top: $line.offset().top + $line.height() / 2,
-          left: $line.position().left + $line.width() + 100,
-          overflow: "display"
-        });
+          left: $container.position().left + $container.width(),
+          overflow: "display",
+          width: $(window).width() - $container.offset().left - $container.width()
+        })
 
         ev.stopPropagation();
       },
@@ -113,6 +125,10 @@ if (Meteor.isClient) {
         'line': Session.get('lineAnnotationNumber'), 
         'file': Session.get('fileID')
       }).fetch();
+    }
+
+    Template.annotations.hasAnnotations = function() {
+      return Template.annotations.annos().length !== 0;
     }
 
   SessionAmplify = _.extend({}, Session, {
@@ -182,7 +198,14 @@ if (Meteor.isClient) {
   	var lines = File.find(Session.get('fileID')).fetch()[0].file.split("\n"),
     	resultsArray = [];
     	_.each(lines, function(line) {
-    		resultsArray.push({text: line, index: resultsArray.length, language: file.language});
+        var isAnnotated = "";
+        if (Annotations.find({
+                'line': resultsArray.length, 
+                'file': Session.get('fileID')
+              }).fetch().length > 0) {
+          isAnnotated = " annotated";
+        }
+    		resultsArray.push({text: line, index: resultsArray.length, language: file.language, isAnnotated: isAnnotated});
     	});
     	return resultsArray;
   }
@@ -234,4 +257,39 @@ if (Meteor.isServer) {
     });
 
   });
+}
+
+// needed for tab to work
+function insertAtCaret(areaId,text) {
+    var txtarea = document.getElementById(areaId);
+    var scrollPos = txtarea.scrollTop;
+    var strPos = 0;
+    var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ? 
+      "ff" : (document.selection ? "ie" : false ) );
+    if (br == "ie") { 
+      txtarea.focus();
+      var range = document.selection.createRange();
+      range.moveStart ('character', -txtarea.value.length);
+      strPos = range.text.length;
+    }
+    else if (br == "ff") strPos = txtarea.selectionStart;
+
+    var front = (txtarea.value).substring(0,strPos);  
+    var back = (txtarea.value).substring(strPos,txtarea.value.length); 
+    txtarea.value=front+text+back;
+    strPos = strPos + text.length;
+    if (br == "ie") { 
+      txtarea.focus();
+      var range = document.selection.createRange();
+      range.moveStart ('character', -txtarea.value.length);
+      range.moveStart ('character', strPos);
+      range.moveEnd ('character', 0);
+      range.select();
+    }
+    else if (br == "ff") {
+      txtarea.selectionStart = strPos;
+      txtarea.selectionEnd = strPos;
+      txtarea.focus();
+    }
+    txtarea.scrollTop = scrollPos;
 }

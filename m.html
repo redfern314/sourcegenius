@@ -35,7 +35,8 @@
 <template name="user">
     <div id="user">
         {{#if loggedIn }}
-            <img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}>
+        	<a href="#"><img id="octocat" src="/octocat.png" width="50" height="50"></a>
+            <a href="#"><img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}></a>
         {{ else }}
             <a href="#">sign in</a>
         {{/if }}
@@ -52,7 +53,7 @@
     <div class="row newFile">
     	<div class="col-md-12">
             <div class="text-container">
-                <textarea width='500' class="language-any"></textarea>
+                <textarea width='500' class="language-any" id="newFileEntry"></textarea>
                 <div class="function save enabled" id='submit-new-file'></div>
             </div>
     	</div>
@@ -65,7 +66,14 @@
         {{> annotation }}
       {{/isolate}}
     {{/each}}
-    <textarea id='annotation' placeholder='Your comment here!'></textarea>
+    <div class="add">
+        {{#if hasAnnotations }}
+        {{else}}
+        <h1>Add an annotation</h1>
+        {{/if }}
+        <textarea id='annotation'></textarea>
+        <button type="button" class="btn btn-default btn-block b">annotate</button>
+    </div>
 </template>
 
 <template name="annotation">
@@ -75,7 +83,7 @@
           <textarea data-id='{{ _id }}'>{{ text }}</textarea>
         {{ else }}
           <div class="col-md-10">
-              {{ text  }}  
+              <p>{{ text  }}</p>
           </div>
           {{#if canEdit this}}
             <div class="col-mid-2" style='text-align:right;'>
@@ -84,27 +92,24 @@
           {{/if}}
         {{/if}}
       </div>
-      <div class="author row">
-          <div class="photo col-md-4">
-              <img src="http://placekitten.com/75/75" alt="">
-          </div>
-          <div class="info col-md-8">
-              <h3 class="handle">{{ author.services.github.username }}</h3>
-          </div>
+      <div class="author">
+          <img src="http://placekitten.com/75/75" alt="">
+          <h6 class="handle">{{ author.services.github.username }}</h6>
+          <div class="cler"></div>
       </div>
+      <div class="clear"></div>
   </div>
 </template>
 
 <template name="show">
 	<div class="row">
-        <div class="col-md-12 code-container">
-            <div class="snippet">
-                {{#each splitLines}}
-                    <div class="line" data-id="{{this.index}}">
-                        <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
-                    </div>
-                {{/each}}
-            </div>
+    <div class="col-md-12 code-container">
+        <div class="snippet">
+            {{#each splitLines}}
+                <div class="line{{this.isAnnotated}}" data-id="{{this.index}}">
+                    <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
+                </div>
+            {{/each}}
         </div>
 	</div>
     <div class='annotations' style='display:none;'>
