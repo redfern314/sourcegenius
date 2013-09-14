@@ -89,7 +89,7 @@ if (Meteor.isClient) {
       },
       'keydown #annotation, click #annotateBtn' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
-        if ( keyCode == 13 || ev.type == "click") {
+        if ( (keyCode == 13 || ev.type == "click") && !event.shiftKey) {
           Annotations.insert({ 
             author: Meteor.user(), 
             file: Session.get('fileID'),
@@ -110,16 +110,19 @@ if (Meteor.isClient) {
     });
 
     Template.annotation.events({
-      'click a span' : function(ev) {
-        Session.set("Source.Annotation.editing", $(ev.target).parents('.edit').data('id'));
+      'click .edit' : function(ev) {
+        Session.set("Source.Annotation.editing", $(ev.target).data('id'));
       },
       'keydown textarea' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
-        if (keyCode == 13) {
+        if (keyCode == 13 && !event.shiftKey) {
           var text = $(ev.target).val();
           Session.set("Source.Annotation.editing", null);
           Annotations.update( $(ev.target).data('id'),{$set : {text: text } });
         }
+      },
+      'click .delete' : function(ev) {
+        Annotations.remove($(ev.target).data('id'));
       }
     });
 

@@ -9,12 +9,16 @@
 			<header>
 				<div class="row">
 				    <div class="col-md-12">
-				        <ul class="actions">
-				            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
+                        <ul class="actions left">
+                            <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+                            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
+                        </ul>
+				        <ul class="actions right">
 				            <li class="user">
 				            	{{> user }}
 				            </li>
 				        </ul>
+                        <div class="clear"></div>
 				    </div>
 				</div>
 			</header>
@@ -82,11 +86,12 @@
 <template name="newFile">
     <div class="row newFile">
     	<div class="col-md-12">
-            <input style='width:100%; margin-bottom:10px;' id='title' place='Title Your Source'></input>
+            <input style='width:100%; margin-bottom:10px;' id='title' placeholder='Add a title'></input>
             <div class="text-container">
-                <textarea width='500' class="language-any" id="newFileEntry"></textarea>
-                <div class="function save enabled" id='submit-new-file'></div>
+                <textarea width='500' class="language-any" id="newFileEntry" placeholder="Paste your code here"></textarea>
             </div>
+
+            <div id='submit-new-file'><span class="glyphicon glyphicon-floppy-disk"></span></div>
     	</div>
     </div>
 </template>
@@ -98,10 +103,6 @@
       {{/isolate}}
     {{/each}}
     <div class="add">
-        {{#if hasAnnotations }}
-        {{else}}
-        <h1>Add an annotation</h1>
-        {{/if }}
         <textarea id='annotation' placeholder="Add a new comment"></textarea>
         <button id="annotateBtn" type="button" class="btn btn-default btn-block b">annotate</button>
     </div>
@@ -127,7 +128,7 @@
       {{# if editing this }}
       {{ else }}
       {{#if canEdit this}}
-          <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit"></span></a>
+          <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit" data-id='{{ _id }}'></span></a>
       {{/if}}
       {{/if}}
       <div class="clear"></div>

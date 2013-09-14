@@ -18,10 +18,17 @@ a {
 }
 
 header {
-    padding: 10px;
+    padding: 10px 0;
     ul.actions {
         list-style: none;
-        float: right;
+        margin: 0;
+        &.right {
+            float: right;
+        }
+        &.left {
+            float: left;
+            padding-left: 0;
+        }
         li {
             float: left;
             margin: 0 5px;
@@ -113,14 +120,38 @@ header {
 }
 
 .newFile {
+    #title {
+        font-size: 30px;
+        @color: lighten(@purple, 20%);
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        color: @color;
+        outline: none;
+        &:active {
+            outline: none;
+        }
+        &::-webkit-input-placeholder { /* WebKit browsers */
+            color: darken(@color, 10%);
+        }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            color: darken(@color, 10%);
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+            color: darken(@color, 10%);
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10+ */
+            color: darken(@color, 10%);
+        }
+    }
     .text-container {
         position: relative;
         textarea {
             width: 100%;
             height: 500px;
-            background: @black;
+            background: transparent;
             color: white;
-            text-shadow: 0 1px rgba(0,0,0,0.3);
+            text-shadow: none;
             font-family: Consolas, Monaco, 'Andale Mono', monospace;
             direction: ltr;
             text-align: left;
@@ -135,26 +166,39 @@ header {
             -moz-hyphens: none;
             -ms-hyphens: none;
             hyphens: none;
-            padding: 10px;
             &:focus, &:active {
                 border: none;
                 outline: none;
             }
-        }
-
-        .function {
-            background: url(/i/function-icons.png);
-            width: 32px;
-            height: 37px;
-            display: inline-block;
-            position: absolute;
-            top: 0;
-            right: 5px;
-            cursor: pointer;
-
+            &::-webkit-input-placeholder { 
+                color: darken(@purple, 10%);
+                text-shadow: none;
+            }
+            &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+                color: darken(@purple, 10%);
+                text-shadow: none;
+            }
+            &::-moz-placeholder { /* Mozilla Firefox 19+ */
+                color: darken(@purple, 10%);
+                text-shadow: none;
+            }
+            &:-ms-input-placeholder { /* Internet Explorer 10+ */
+                color: darken(@purple, 10%);
+                text-shadow: none;
+            }
         }
     }
-
+    #submit-new-file {
+        position: absolute;
+        right: 0;
+        top: 10px;
+        font-size: 20px;
+        color: lighten(@purple, 10%);
+        cursor: pointer;
+        &:hover {
+            color: lighten(@purple, 20%);
+        }
+    }
 }
 
 .code-container {
@@ -193,7 +237,6 @@ header {
             &.annotated {
                 pre {
                     background: lighten(@black, 10%);
-                    border-radius: 3px;
                     position: relative;
                     &:hover {
                         &:after {
@@ -303,9 +346,9 @@ header {
         textarea#annotation {
             width: 100%;
             height: 100px;
-            margin: 20px 0;
         }
         button {
+            margin-top: 20px;
             background: #3498db;
             border: none;
             border-radius: 0;
@@ -325,23 +368,3 @@ textarea {
         outline: none;
     }
 }
-
-.function.save { background-position: -5px top; }
-.function.enabled.save { background-position: -5px center; }
-.function.enabled.save:hover { background-position: -5px bottom; }
-
-.function.new { background-position: -42px top; }
-.function.enabled.new { background-position: -42px center; }
-.function.enabled.new:hover { background-position: -42px bottom; }
-
-.function.duplicate { background-position: -79px top; }
-.function.enabled.duplicate { background-position: -79px center; }
-.function.enabled.duplicate:hover { background-position: -79px bottom; }
-
-.function.raw { background-position: -116px top; }
-.function.enabled.raw { background-position: -116px center; }
-.function.enabled.raw:hover { background-position: -116px bottom; }
-
-.function.twitter { background-position: -153px top; }
-.function.enabled.twitter { background-position: -153px center; }
-.function.enabled.twitter:hover { background-position: -153px bottom; }
