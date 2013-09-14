@@ -31,7 +31,11 @@ if (Meteor.isClient) {
       'click #submit-new-file' : function(ev, page) {
         var textbox = page.find('textarea');
         var file = $(textbox).val();
-        Files.insert({ 'file' : file, shared: [], author: Meteor.userId }, function(error, result) {
+        if (file === "") return;
+
+        var language = hljs.highlightAuto(file).language;
+
+        Files.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
           if (error) {
             alert('An unknown error occurred');
           } else {
@@ -95,7 +99,7 @@ if (Meteor.isClient) {
 
     	resultsArray = [];
     	_.each(lines, function(line) {
-    		resultsArray.push({text: line, index: resultsArray.length});
+    		resultsArray.push({text: line, index: resultsArray.length, language: file.language});
     	});
     	return resultsArray;
     }

@@ -1,5 +1,6 @@
 <head>
   <title>SourceGenius</title>
+  <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 </head>
 
 <body>
@@ -53,9 +54,7 @@
     	<div class="col-md-12">
             <div class="text-container">
                 <textarea width='500' class="language-any"></textarea>
-                <div class="function">
-                    <div class="save" id='submit-new-file'></div>
-                </div>
+                <div class="function save enabled" id='submit-new-file'></div>
             </div>
     	</div>
     </div>
@@ -90,7 +89,7 @@
         <div class="snippet">
             {{#each splitLines}}
                 <div class="line" data-id="{{this.index}}">
-                    <pre><code class='language-css'>{{this.text}}</code></pre>
+                    <pre><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}
         </div>
