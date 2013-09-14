@@ -17,10 +17,17 @@ a {
 }
 
 header {
-    padding: 10px;
+    padding: 10px 0;
     ul.actions {
         list-style: none;
-        float: right;
+        margin: 0;
+        &.right {
+            float: right;
+        }
+        &.left {
+            float: left;
+            padding-left: 0;
+        }
         li {
             float: left;
             margin: 0 5px;
