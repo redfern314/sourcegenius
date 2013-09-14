@@ -9,12 +9,16 @@
 			<header>
 				<div class="row">
 				    <div class="col-md-12">
-				        <ul class="actions">
-				            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
+                        <ul class="actions left">
+                            <li><a href="/new"><span class="glyphicon glyphicon-home"></span></a></li>
+                            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
+                        </ul>
+				        <ul class="actions right">
 				            <li class="user">
 				            	{{> user }}
 				            </li>
 				        </ul>
+                        <div class="clear"></div>
 				    </div>
 				</div>
 			</header>
@@ -87,7 +91,7 @@
                 <textarea width='500' class="language-any" id="newFileEntry" placeholder="Paste your code here"></textarea>
             </div>
 
-            <div class="function save enabled" id='submit-new-file'></div>
+            <div id='submit-new-file'><span class="glyphicon glyphicon-floppy-disk"></span></div>
     	</div>
     </div>
 </template>

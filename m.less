@@ -17,10 +17,17 @@ a {
 }
 
 header {
-    padding: 10px;
+    padding: 10px 0;
     ul.actions {
         list-style: none;
-        float: right;
+        margin: 0;
+        &.right {
+            float: right;
+        }
+        &.left {
+            float: left;
+            padding-left: 0;
+        }
         li {
             float: left;
             margin: 0 5px;
@@ -179,21 +186,18 @@ header {
                 text-shadow: none;
             }
         }
-
-
     }
-    .function {
-        background: url(/i/function-icons.png);
-        width: 32px;
-        height: 37px;
-        display: inline-block;
+    #submit-new-file {
         position: absolute;
-        top: 5px;
-        right: 5px;
+        right: 0;
+        top: 10px;
+        font-size: 20px;
+        color: lighten(@purple, 10%);
         cursor: pointer;
-
+        &:hover {
+            color: lighten(@purple, 20%);
+        }
     }
-
 }
 
 .code-container {
@@ -363,23 +367,3 @@ textarea {
         outline: none;
     }
 }
-
-.function.save { background-position: -5px top; }
-.function.enabled.save { background-position: -5px center; }
-.function.enabled.save:hover { background-position: -5px bottom; }
-
-.function.new { background-position: -42px top; }
-.function.enabled.new { background-position: -42px center; }
-.function.enabled.new:hover { background-position: -42px bottom; }
-
-.function.duplicate { background-position: -79px top; }
-.function.enabled.duplicate { background-position: -79px center; }
-.function.enabled.duplicate:hover { background-position: -79px bottom; }
-
-.function.raw { background-position: -116px top; }
-.function.enabled.raw { background-position: -116px center; }
-.function.enabled.raw:hover { background-position: -116px bottom; }
-
-.function.twitter { background-position: -153px top; }
-.function.enabled.twitter { background-position: -153px center; }
-.function.enabled.twitter:hover { background-position: -153px bottom; }
