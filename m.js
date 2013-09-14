@@ -50,7 +50,11 @@ if (Meteor.isClient) {
     Template.show.events({
       'click .line' : function(ev) {
         $(".annotations").slideDown(200);
-        var lineId = $(ev.target).hasClass('line') ? $(ev.target).data('id') : $(ev.target).parent('.line').data('id');
+        $target = $(ev.target);
+        while ( !$target.hasClass('line') ) {
+          $target= $($target.parent());
+        }
+        var lineId = $target.data('id');
         Session.set('lineAnnotationNumber', lineId);
         ev.stopPropagation();
       },
