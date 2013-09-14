@@ -111,7 +111,7 @@ if (Meteor.isClient) {
     });
 
     Template.annotation.events({
-      'click .edit' : function(ev) {
+      'click .edit span' : function(ev) {
         Session.set("Source.Annotation.editing", $(ev.target).data('id'));
       },
       'keydown textarea' : function(ev) {
@@ -122,7 +122,7 @@ if (Meteor.isClient) {
           Annotations.update( $(ev.target).data('id'),{$set : {text: text } });
         }
       },
-      'click .delete' : function(ev) {
+      'click .delete span' : function(ev) {
         Annotations.remove($(ev.target).data('id'));
       }
     });
