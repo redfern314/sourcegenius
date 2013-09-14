@@ -1,6 +1,7 @@
 @import "/packages/bootstrap3-less/bootstrap.lessimport";
 
 @purple: #9b59b6;
+@lightPurple: #b79ac3;
 @black: #272822;
 @gray: #bdc3c7;
 @raspberry: #990033;
@@ -9,8 +10,16 @@ body {
     background: @purple;
 }
 
-a {
+#sources a {
     text-decoration: none;
+    font-size: 20px;
+    color: @lightPurple;
+    line-height: 50px;
+}
+
+#sources a:hover {
+    text-decoration: none;
+    color: white;
 }
 
 #annotateBtn {
