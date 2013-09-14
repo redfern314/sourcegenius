@@ -110,8 +110,8 @@ if (Meteor.isClient) {
     });
 
     Template.annotation.events({
-      'click .edit' : function(ev) {
-        Session.set("Source.Annotation.editing", $(ev.target).data('id'));
+      'click a span' : function(ev) {
+        Session.set("Source.Annotation.editing", $(ev.target).parents('.edit').data('id'));
       },
       'keydown textarea' : function(ev) {
         var keyCode = ev.keyCode || ev.which;

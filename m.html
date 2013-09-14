@@ -112,25 +112,27 @@
 
 <template name="annotation">
     <div class="annotation">
-      <div class="content row">
-        {{#if editing this}}
-          <textarea data-id='{{ _id }}'>{{ text }}</textarea>
-        {{ else }}
-          <div class="col-md-10">
-              <p>{{ text  }}</p>
-          </div>
-          {{#if canEdit this}}
-            <div class="col-mid-2" style='text-align:right;'>
-              <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'>Edit</a>
+        <div class="content row">
+            <div class="col-md-12">
+                {{#if editing this}}
+
+                    <textarea data-id='{{ _id }}'>{{ text }}</textarea>
+                {{ else }}
+                    <p>{{ text  }}</p>
+                {{/if}}
             </div>
-          {{/if}}
-        {{/if}}
-      </div>
-      <div class="author">
-          <img src="http://placekitten.com/75/75" alt="">
-          <h6 class="handle">{{ author.services.github.username }}</h6>
-          <div class="cler"></div>
-      </div>
+        </div>
+        <div class="author">
+            <img src="http://placekitten.com/75/75" alt="">
+            <h6 class="handle">{{ author.services.github.username }}</h6>
+            <div class="cler"></div>
+        </div>
+      {{# if editing this }}
+      {{ else }}
+      {{#if canEdit this}}
+          <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit"></span></a>
+      {{/if}}
+      {{/if}}
       <div class="clear"></div>
   </div>
 </template>

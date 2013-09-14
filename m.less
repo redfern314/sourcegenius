@@ -229,6 +229,9 @@ header {
         padding: 10px;
         position: relative;
         margin: 10px 0;
+        textarea {
+            width: 100%;
+        }
         .author {
             margin-top: 20px;
             float: right;
@@ -248,6 +251,17 @@ header {
                 height: @size;
                 width: @size;
                 border-radius: @size / 2;
+            }
+        }
+        .edit {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            span {
+                color: white;
+                &:hover {
+                    color: darken(white, 30%);
+                }
             }
         }
     }
