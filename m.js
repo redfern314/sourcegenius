@@ -4,6 +4,11 @@ Annotations = new Meteor.Collection('annotations');
 if (Meteor.isClient) {
   Session.set('Source.Annotation.editing', null)
     Session.set("creatingNewFile", false);
+
+    Handlebars.registerHelper('index', function() {
+        return Meteor.Router.page() === "landing";
+    });
+
     Meteor.startup(function() {
       Meteor.Router.add({
         '/': 'landing',
@@ -20,6 +25,19 @@ if (Meteor.isClient) {
       }, 500)
     }); 
 
+
+    Meteor.Router.filters({
+      'checkLoggedIn': function(page) {
+        console.log('hi');
+        if (Meteor.user()) {
+          return page;
+        } else {
+          return 'landing';
+        }
+      }
+    });
+    Meteor.Router.filter('checkLoggedIn', {only: 'home'});
+
     Template.newFile.events({
       'click #submit-new-file' : function(ev, page) {
         var textbox = $('#newFileEntry');
@@ -33,7 +51,7 @@ if (Meteor.isClient) {
         File.insert({ 
           'file' : $.trim(file), 
           shared: [], 
-          author: Meteor.userId(), 
+          author: Meteor.userId, 
           language: language,
           title: title
         }, function(error, result) {
@@ -80,7 +98,7 @@ if (Meteor.isClient) {
           top: $line.offset().top + $line.height() / 2,
           left: $container.position().left + $container.width(),
           overflow: "display",
-          width: $(window).width() - $container.offset().left - $container.width()
+          width: $(window).width() - $container.offset().left - $container.width() - 20
         });
 
         $('.annotations').css(Session.get('Source.Annotation.annoCSS'));
@@ -163,6 +181,69 @@ if (Meteor.isClient) {
     return Meteor.user().profile.username;
   }
 
+  Template.github.repoitems = function() {
+    return Session.get("repoitems");
+  }
+
+  var getRepos = function(page) {
+    // get repos from this user
+    var username = $(page.find("#username"))[0].value;
+    HTTP.call("GET", "https://api.github.com/users/"+username+"/repos",
+      function (error, result) {
+        if (result.statusCode === 200) {
+          console.log(result);
+          Session.set("repoitems",result.data);
+          Session.set("repomode","repo");
+          Session.set("repouser",username);
+        }
+    });
+  }
+
+  var saveGithubFile = function(user,repo,file) {
+    Meteor.call("getFileFromGithub",user,repo,file,function(error,result){
+      var file = result.content;
+      var language = hljs.highlightAuto(file).language;
+
+      File.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
+        if (error) {
+          alert('An unknown error occurred');
+        } else {
+          Meteor.Router.to('/show/' + result);
+        }
+      });
+    });
+  }
+
+  Template.github.events({
+    'click button' : function(ev,page) {
+      getRepos(page);
+    },
+    'keydown input' : function(ev,page) {
+      if(ev.keyCode==13) {
+        getRepos(page);
+      }
+    },
+    'click .itemrow' : function(ev,page) {
+      saveGithubFile("redfern314","sourcegenius","m.js");
+      var itemname = ev.srcElement.innerText;
+      var username = Session.get("repouser");
+      console.log(itemname);
+      if(Session.get("repomode")=="repo") {
+        // get files in repo
+        Session.set("currentrepo",itemname);
+      } else {
+        // determine whether clicked obj is file or directory
+        var isFile = true;
+        var repoitems = Session.get("repoitems");
+        if(isFile) {
+          saveGithubFile();
+        } else {
+
+        }
+      }
+    }
+  })
+
   SessionAmplify = _.extend({}, Session, {
     keys: _.object(_.map(amplify.store(), function(value, key) {
       return [key, JSON.stringify(value)]
@@ -173,21 +254,12 @@ if (Meteor.isClient) {
     },
   });
 
-	Handlebars.registerHelper('numberLines', function(obj) {
-		result = [];
-		var lineCount = 0;
-		_.each(obj, function(line){
-			result.push({name:line, value:lineCount});
-			lineCount++;
-		});
-		return result;
-	});
-
   Template.user.events({
     'click #signin,#propic' : function(ev, page) {
       if(SessionAmplify.get("loggedIn")) {
         SessionAmplify.set("loggedIn",false);
         Meteor.logout();
+        Meteor.Router.to('/');
       } else {
         Meteor.loginWithGithub({
           requestPermissions: ['user', 'public_repo']
@@ -212,20 +284,13 @@ if (Meteor.isClient) {
     }
   })
 
-  Template.sourceSynopsisTemplate.prettifyTitle = function(title) {
-    return title ? title : 'untitled'
-  }
-
-  Template.sourceSynopsisTemplate.authorName = function(id) {
-    return Meteor.users.find(id).fetch()[0].profile.username;
-  }
 
   Template.user.URL = function() {
     return SessionAmplify.get('propic');
   }
 
   Template.user.loggedIn = function() {
-    return Meteor.userId();
+    return SessionAmplify.get("loggedIn");
   }
 
   Template.show.splitLines = function() {
@@ -234,7 +299,7 @@ if (Meteor.isClient) {
     	resultsArray = [];
     	_.each(lines, function(line) {
         var cssClasses = "";
-        if (line.trim() != "") {
+        if (line != "") {
           cssClasses += "line";
           if (Annotations.find({
                   'line': resultsArray.length, 
@@ -294,6 +359,14 @@ if (Meteor.isServer) {
           return true;
         }
         else return false;
+      }
+    });
+
+    Meteor.methods({
+      getFileFromGithub: function (user,repo,file) {
+          this.unblock();
+          var URL = "https://raw.github.com/"+user+"/"+repo+"/master/"+file;
+          return Meteor.http.call("GET", URL);
       }
     });
 
