@@ -35,7 +35,8 @@
 <template name="user">
     <div id="user">
         {{#if loggedIn }}
-            <img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}>
+        	<a href="#"><img id="octocat" src="/octocat.png" width="50" height="50"></a>
+            <a href="#"><img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}></a>
         {{ else }}
             <a href="#">sign in</a>
         {{/if }}
@@ -52,7 +53,7 @@
     <div class="row newFile">
     	<div class="col-md-12">
             <div class="text-container">
-                <textarea width='500' class="language-any"></textarea>
+                <textarea width='500' class="language-any" id="newFileEntry"></textarea>
                 <div class="function save enabled" id='submit-new-file'></div>
             </div>
     	</div>
