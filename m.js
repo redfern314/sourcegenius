@@ -202,12 +202,13 @@ if (Meteor.isClient) {
     // get repos from this user
     var username = $(page.find("#username"))[0].value;
     HTTP.call("GET", "https://api.github.com/users/"+username+"/repos",
-      function (error, result) {
+      {params:{sort:"updated"}}, function (error, result) {
         if (result.statusCode === 200) {
           console.log(result);
           Session.set("repoitems",result.data);
           Session.set("repomode","repo");
           Session.set("repouser",username);
+          Session.set("repopath","");
         }
     });
   }
@@ -222,10 +223,11 @@ if (Meteor.isClient) {
     });
   }
 
-  var saveGithubFile = function(user,repo,file) {
-    Meteor.call("getFileFromGithub",user,repo,file,function(error,result){
+  var saveGithubFile = function(user,repo,filename) {
+    Meteor.call("getFileFromGithub",user,repo,filename,function(error,result){
       var file = result.content;
       var language = hljs.highlightAuto(file).language;
+      console.log(language);
 
       File.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
         if (error) {
@@ -261,12 +263,12 @@ if (Meteor.isClient) {
       var itemname = ev.srcElement.innerText;
       var username = Session.get("repouser");
       var path = Session.get("repopath");
-      var repo = Session.get("repocurrent");
+      var repo = Session.get("currentrepo");
       var repoitems = Session.get("repoitems");
       var curritem;
 
       for (var i = repoitems.length - 1; i >= 0; i--) {
-        if(repoitems[i].name == ev.srcElement.innerText) {
+        if((repoitems[i].name || repoitems[i].path) == ev.srcElement.innerText) {
           curritem=repoitems[i];
           break;
         }
@@ -275,20 +277,22 @@ if (Meteor.isClient) {
       console.log(curritem);
       if(Session.get("repomode")=="repo") {
         // get files in repo
-        // Session.set("currentrepo",itemname);
-        // Session.set("repomode","tree");
+        Session.set("currentrepo",itemname);
+        Session.set("repomode","tree");
 
         console.log("repo");
         getRootSHA(username,itemname);
       } else {
         // determine whether clicked obj is file or directory
         if(curritem.type=="blob") { //file
+          console.log(path+itemname);
           saveGithubFile(username,repo,path+itemname);
           console.log("blob");
         } else { //directory
           path = path+itemname+"/";
           Session.set("repopath",path);
           console.log("tree");
+          getTree(username,repo,curritem.sha);
           // get new set of files
         }
       }
@@ -418,6 +422,7 @@ if (Meteor.isServer) {
       getFileFromGithub: function (user,repo,file) {
           this.unblock();
           var URL = "https://raw.github.com/"+user+"/"+repo+"/master/"+file;
+          console.log(URL);
           return Meteor.http.call("GET", URL);
       }
     });
