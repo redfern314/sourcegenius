@@ -48,7 +48,7 @@ if (Meteor.isClient) {
         var textbox = $('#newFileEntry');
         var titlebox = $('#title');
         var file = $(textbox).val();
-        var title = $(titlebox).val();
+        var title = titlebox.val();
         if (file === "") return;
 
         var language = hljs.highlightAuto(file).language;
@@ -56,13 +56,14 @@ if (Meteor.isClient) {
         File.insert({ 
           'file' : $.trim(file), 
           shared: [], 
-          author: Meteor.userId, 
+          author: Meteor.userId(), 
           language: language,
           title: title
         }, function(error, result) {
           if (error) {
             alert('An unknown error occurred');
           } else {
+            console.log( File.find(result).fetch()[0] )
             Meteor.Router.to('/show/' + result);
           }
         });
@@ -163,9 +164,30 @@ if (Meteor.isClient) {
       return title ? title : 'untitled'
     }
 
-   Template.sourceSynopsisTemplate.authorPhoto = function(id) {
-     return Meteor.users.find(id).fetch()[0].profile.propic;
-   }
+    Template.show.prettyTitle = function() {
+      var title = File.find(Session.get('fileID')).fetch()[0].title ;
+      return title ? title : 'untitled';
+    }
+
+    Template.show.authorPhoto = function() {
+      return Meteor.users.find(
+        File.find(Session.get('fileID')).fetch()[0].author
+      ).fetch()[0].profile.propic;
+    }
+    Template.sourceSynopsisTemplate.authorPhoto = function(id) {
+      return Meteor.users.find(id).fetch()[0].profile.propic;
+    }
+
+    Template.show.canWatch = function() {
+      var file = File.find(Session.get('fileID')).fetch()[0];
+      return file.author != Meteor.userId() && !_.contains(file.shared, Meteor.userId());
+    }
+
+    Template.show.events({
+      'click #watch' : function(ev) {
+        File.update(Session.get('fileID'), { $push: { shared: Meteor.userId() } });
+      }
+    })
 
     Template.home.creatingNewFile = function() {
       return Session.get('creatingNewFile');
