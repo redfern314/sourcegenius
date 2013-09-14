@@ -1,4 +1,5 @@
 Files = new Meteor.Collection("files");
+Annotations = new Meteor.Collection("annotations");
 
 if (Meteor.isClient) {
   
@@ -31,7 +32,7 @@ if (Meteor.isClient) {
       'click #submit-new-file' : function(ev, page) {
         var textbox = page.find('textarea');
         var file = $(textbox).val();
-        Files.insert({ 'file' : file, shared: [], author: Meteor.userId }, function(error, result) {
+        Files.insert({ 'file' : file, shared: [], author: Meteor.userId() }, function(error, result) {
           if (error) {
             alert('An unknown error occurred');
           } else {
