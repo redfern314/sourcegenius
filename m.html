@@ -118,6 +118,7 @@
 </template>
 
 <template name="annotation">
+  {{#isolate}}
     <div class="annotation">
         <div class="content row">
             <div class="col-md-12">
@@ -144,22 +145,25 @@
       {{/if}}
       {{/if}}
       <div class="clear"></div>
-  </div>
+    </div>
+  {{/isolate}}
 </template>
 
 <template name="show">
 	<div class="row">
     <div class="col-md-12 code-container">
         <div class="snippet">
+          {{#isolate}}
             {{#each splitLines}}
                 <div class="{{this.cssClasses}}" data-id="{{this.index}}">
                     <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}
+          {{/isolate}}
         </div>
 	</div>
     {{#isolate}}
-      <div class='annotations' style='display:none;'>
+      <div class='annotations'>
         {{> annotations}}
       </div>
     {{/isolate}}
