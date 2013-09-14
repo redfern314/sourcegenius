@@ -255,9 +255,8 @@ if (Meteor.isClient) {
     Meteor.call("getFileFromGithub",user,repo,filename,function(error,result){
       var file = result.content;
       var language = hljs.highlightAuto(file).language;
-      console.log(language);
 
-      File.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
+      File.insert({ 'file' : file, shared: [], author: Meteor.userId(), title: filename, language: language }, function(error, result) {
         if (error) {
           alert('An unknown error occurred');
         } else {

@@ -34,8 +34,12 @@
                 
             </div>
 
+            {{#if index}}
+            {{else}}
             <footer>
+                (&lt;3 + SF) + KM + JP + MS + DR
             </footer>
+            {{/if}}
         </div>
     </div>
 </body>
@@ -78,12 +82,9 @@
 
 <template name="github">
 	<div class="row github">
-    	<div class="col-md-12">
-            <div class="text-container">
-                <h3>Username</h3>
-                <input id='username' width='100' value={{ username }}>
-                <button id='submitusername'>Submit</button>
-            </div>
+    	<div class="col-md-12 search">
+            <input id='username' width='100' value={{ username }}>
+            <button id='submitusername'>Submit</button>
     	</div>
     </div>
     <div class="row github">
@@ -169,7 +170,7 @@
 <template name="show">
 	<div class="row">
     <div class="col-md-12 code-container">
-        <h2 class='clearfix'>
+        <h2 class='clearfix title'>
           <img class="author" src="{{ authorPhoto }}">&nbsp;&nbsp;{{ prettyTitle title }}
             <span class='pull-right'>
               {{#if canWatch}}
