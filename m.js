@@ -55,8 +55,7 @@ if (Meteor.isClient) {
     });
 
     $(document).click(function() {
-      $(".annotations").hide();
-      Session.set('annotations', false);
+        $(".annotations").hide();
     });
 
     Template.annotations.events({
@@ -101,7 +100,6 @@ if (Meteor.isClient) {
               alert("An unknown error has occurred");
             } else {
               $("#annotation").val('');
-              $('.annotations').show().css(Session.get('Source.Annotation.annoCSS'));;
               ev.preventDefault();
               ev.stopPropagation();
             }
