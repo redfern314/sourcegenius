@@ -3,6 +3,10 @@ Annotations = new Meteor.Collection('annotations');
 
 if (Meteor.isClient) {
     Session.set("creatingNewFile", false);
+    Handlebars.registerHelper('index', function() {
+        console.log('hi');
+        return Meteor.Router.page() === "index";
+    });
     Meteor.startup(function() {
       Meteor.Router.add({
         '/': 'landing',

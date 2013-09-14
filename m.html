@@ -3,6 +3,7 @@
 </head>
 
 <body>
+    {{#if not index }}
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -33,10 +34,15 @@
           	</footer>
       	</div>
     </div>
+    {{ else }}
+    {{ renderPage }}
+    {{/if }}
 </body>
 
 <template name="landing">
-    <h1>sourcegenius</h1>
+    <div class="index">
+        <h1><span class="source">source</span><span class="genius">genius</span></h1>
+    </div>
 </template>
 
 <template name="user">
