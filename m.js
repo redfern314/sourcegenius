@@ -7,6 +7,7 @@ if (Meteor.isClient) {
       Meteor.Router.add({
         '/': 'newFile',
         '/new': 'newFile',
+        '/github': 'github',
         '/show/:id': function(id) {
           Session.set('fileID', id);
           return 'show';
@@ -134,6 +135,10 @@ if (Meteor.isClient) {
       return Template.annotations.annos().length !== 0;
     }
 
+  Template.github.username = function() {
+    return Meteor.user().profile.username;
+  }
+
   SessionAmplify = _.extend({}, Session, {
     keys: _.object(_.map(amplify.store(), function(value, key) {
       return [key, JSON.stringify(value)]
@@ -155,7 +160,7 @@ if (Meteor.isClient) {
 	});
 
   Template.user.events({
-    'click #user' : function(ev, page) {
+    'click #signin,#propic' : function(ev, page) {
       var loggedIn = SessionAmplify.get("loggedIn");
       if(loggedIn) {
         SessionAmplify.set("loggedIn",false);

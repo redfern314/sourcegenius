@@ -35,18 +35,24 @@
 <template name="user">
     <div id="user">
         {{#if loggedIn }}
-        	<a href="#"><img id="octocat" src="/octocat.png" width="50" height="50"></a>
+        	<a href="/github"><img id="octocat" src="/octocat.png" width="50" height="50"></a>
             <a href="#"><img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}></a>
         {{ else }}
-            <a href="#">sign in</a>
+            <a id="signin" href="#">sign in</a>
         {{/if }}
     </div>
 </template>
 
-<template name="hello">
-    <h1>Hello World!</h1>
-    {{greeting}}
-    {{loginButtons}}
+<template name="github">
+	<div class="row github">
+    	<div class="col-md-12">
+            <div class="text-container">
+                <h3>Username</h3>
+                <input id='username' width='100' value={{ username }}>
+                <button id='submitusername'>Submit</button>
+            </div>
+    	</div>
+    </div>
 </template>
 
 <template name="newFile">
@@ -117,10 +123,6 @@
         {{> annotations}}
       </div>
     {{/isolate}}
-</template>
-
-<template name="signIn">
-	{{ loginButtons }}
 </template>
 
 <template name="sources">
