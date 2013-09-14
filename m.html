@@ -10,7 +10,7 @@
 				<div class="row">
 				    <div class="col-md-12">
                         <ul class="actions left">
-                            <li><a href="/"><span class="glyphicon glyphicon-home"></span></a></li>
+                            <li><a href="/home"><span class="glyphicon glyphicon-home"></span></a></li>
                             <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
                         </ul>
 				        <ul class="actions right">
@@ -35,6 +35,9 @@
     </div>
 </body>
 
+<template name="landing">
+    <h1>sourcegenius</h1>
+</template>
 
 <template name="user">
     <div id="user">
@@ -77,6 +80,17 @@
             </div>
     	</div>
     </div>
+    <div class="row github">
+    	<div class="col-md-12">
+	    	<div class="text-container">
+	        	{{#each repoitems}}
+	        		 <div class="itemrow">
+	            		{{name}}
+	        		</div>
+	        	{{/each}}
+	        </div>
+        </div>
+    </div>
 </template>
 
 <template name='sharedSourceTemplate'>
@@ -109,6 +123,7 @@
 </template>
 
 <template name="annotation">
+  {{#isolate}}
     <div class="annotation">
         <div class="content row">
             <div class="col-md-12">
@@ -128,26 +143,32 @@
       {{# if editing this }}
       {{ else }}
       {{#if canEdit this}}
+        <div class="actions">
+          <a style='cursor:pointer;' class='delete' data-id='{{ _id }}'><span class="glyphicon glyphicon-remove" data-id='{{ _id }}'></span></a>
           <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit" data-id='{{ _id }}'></span></a>
+        </div>
       {{/if}}
       {{/if}}
       <div class="clear"></div>
-  </div>
+    </div>
+  {{/isolate}}
 </template>
 
 <template name="show">
 	<div class="row">
     <div class="col-md-12 code-container">
         <div class="snippet">
+          {{#isolate}}
             {{#each splitLines}}
                 <div class="{{this.cssClasses}}" data-id="{{this.index}}">
                     <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}
+          {{/isolate}}
         </div>
 	</div>
     {{#isolate}}
-      <div class='annotations' style='display:none;'>
+      <div class='annotations'>
         {{> annotations}}
       </div>
     {{/isolate}}
