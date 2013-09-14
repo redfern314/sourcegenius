@@ -1,16 +1,30 @@
 <head>
-  <title>m</title>
+  <title>SourceGenius</title>
 </head>
 
 <body>
+  {{ loginButtons }}
   {{> codeSnippet}}
+  {{> newSource}}
 </body>
+
+<template name="login">
+  {{loginButtons}}
+</template>
 
 <template name="codeSnippet">
   {{#each linesOfCode}}
-  <div class="line">{{this}}</div>
+  <div class="line" data-id="{{nextLine}}">{{this}}</div>
   {{/each}}
   {{#each annotations}}
   <div class="annotation">{{this}}</div>
   {{/each}}
+</template>
+
+<template name="newSource">
+  <div>
+    <h1>Add new source code</h1>
+    <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
+    <button class='btn' id='submit-new-source'>Submit</button>
+  </div>
 </template>
