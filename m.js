@@ -37,7 +37,7 @@ if (Meteor.isClient) {
 
     $(document).click(function() {
       console.log("removing");
-      $(".annotations").slideUp(200).find('.info').empty();
+      $(".annotations").slideUp(200);
       Session.set('annotations', false);
     });
 
@@ -61,12 +61,11 @@ if (Meteor.isClient) {
       'keydown #annotation' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
         if ( keyCode == 13 ) {
-          var annotationText = $("#annotation").val();
           Annotations.insert({ 
             author: Meteor.user(), 
             file: Session.get('fileID'),
             line: Session.get('lineAnnotationNumber'),
-            text: annotationText
+            text: $("#annotation").val()
           }, function(error, result) {
             if (error) {
               alert("An unknown error has occurred");
