@@ -84,9 +84,9 @@
 
 <template name="show">
 	<div class="row">
-	    <div class="col-md-12 code-container">
-	    	{{#each splitLines}}
-  			  	<pre><code class='language-javascript'><div class="line" data-id="{{this.index}}">{{this.text}}</div></code></pre>
+    <div class="col-md-12 code-container">
+    	{{#each splitLines}}
+		  	<pre><code class='language-javascript'><div class="line" data-id="{{this.index}}">{{this.text}}</div></code></pre>
 			{{/each}}
 		</div>
 	</div>
@@ -94,8 +94,6 @@
 
 <template name="signIn">
 	{{ loginButtons }}
-	{{> newSource}}
-
 	<div class='test-triangle'>
 	</div>
 </template>
