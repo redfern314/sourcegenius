@@ -7,6 +7,13 @@ standard-app-packages
 autopublish
 insecure
 preserve-inputs
+<<<<<<< HEAD
 bootstrap3-less
 less
 prismjs
+=======
+accounts-base
+router
+accounts-ui
+accounts-github
+>>>>>>> c1ec8f6eb3fa5d65177a616b5c8c94ecef03bdf0

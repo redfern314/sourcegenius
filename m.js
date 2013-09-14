@@ -1,15 +1,24 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to m.";
-  };
-
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
+  Accounts.ui.config({
+    requestPermissions: {
+      github: ['user', 'repo']
+    },
+    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
   });
+
+  Template.newSource.events({
+    'click #submit-new-source' : function(ev, page) {
+      var $textbox = page.find('textarea');
+      var source = $textbox.val();
+      Source.insert({ 'source' : source, shared: [], author: Meteor.userId }, function(error, result) {
+        if (error) {
+          alert('An unknown error occurred');
+        } else {
+          $textbox.val('');
+        }
+      });
+    }
+  })
 }
 
 if (Meteor.isServer) {

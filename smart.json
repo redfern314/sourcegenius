@@ -2,5 +2,6 @@
   "packages": {
     "bootstrap3-less": {},
     "prismjs": {}
+    "router": {}
   }
 }
