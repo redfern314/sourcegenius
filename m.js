@@ -22,7 +22,7 @@ if (Meteor.isClient) {
             return 'landing';
           }
         },
-        '/home': 'new',
+        '/home': 'home',
         '/new': 'newFile',
         '/github': function() {
           Session.get('repos', false);

@@ -443,13 +443,17 @@ header {
             height: 100px;
         }
         button {
+            @color: #3498db;
             margin-top: 20px;
-            background: #3498db;
+            background: @color;
             border: none;
             border-radius: 0;
             padding: 14px;
             font-size: 20px;
             color: white;
+            &:hover {
+                background: darken(@color, 10%);
+            }
         }
     }
 
