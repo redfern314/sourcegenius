@@ -199,6 +199,16 @@ if (Meteor.isClient) {
     });
   }
 
+  var getTree = function(user,repo,sha) {
+    HTTP.call("GET", "https://api.github.com/repos/"+user+"/"+repo+"/git/trees/"+sha,
+      function (error, result) {
+        if (result.statusCode === 200) {
+          console.log(result);
+          Session.set("repoitems",result.data.tree);
+        }
+    });
+  }
+
   var saveGithubFile = function(user,repo,file) {
     Meteor.call("getFileFromGithub",user,repo,file,function(error,result){
       var file = result.content;
@@ -214,6 +224,16 @@ if (Meteor.isClient) {
     });
   }
 
+  var getRootSHA = function(user,repo) {
+    HTTP.call("GET", "https://api.github.com/repos/"+user+"/"+repo+"/commits",
+      function (error, result) {
+        if (result.statusCode === 200) {
+          console.log(result.data[0].sha);
+          getTree(user,repo,result.data[0].sha);
+        }
+    });
+  }
+
   Template.github.events({
     'click button' : function(ev,page) {
       getRepos(page);
@@ -224,21 +244,39 @@ if (Meteor.isClient) {
       }
     },
     'click .itemrow' : function(ev,page) {
-      saveGithubFile("redfern314","sourcegenius","m.js");
+      // saveGithubFile("redfern314","sourcegenius","m.js");
       var itemname = ev.srcElement.innerText;
       var username = Session.get("repouser");
-      console.log(itemname);
+      var path = Session.get("repopath");
+      var repo = Session.get("repocurrent");
+      var repoitems = Session.get("repoitems");
+      var curritem;
+
+      for (var i = repoitems.length - 1; i >= 0; i--) {
+        if(repoitems[i].name == ev.srcElement.innerText) {
+          curritem=repoitems[i];
+          break;
+        }
+      };
+
+      console.log(curritem);
       if(Session.get("repomode")=="repo") {
         // get files in repo
-        Session.set("currentrepo",itemname);
+        // Session.set("currentrepo",itemname);
+        // Session.set("repomode","tree");
+
+        console.log("repo");
+        getRootSHA(username,itemname);
       } else {
         // determine whether clicked obj is file or directory
-        var isFile = true;
-        var repoitems = Session.get("repoitems");
-        if(isFile) {
-          saveGithubFile();
-        } else {
-
+        if(curritem.type=="blob") { //file
+          saveGithubFile(username,repo,path+itemname);
+          console.log("blob");
+        } else { //directory
+          path = path+itemname+"/";
+          Session.set("repopath",path);
+          console.log("tree");
+          // get new set of files
         }
       }
     }
