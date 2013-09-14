@@ -1,7 +1,6 @@
 @import "/packages/bootstrap3-less/bootstrap.lessimport";
 
 @purple: #9b59b6;
-@lightPurple: #b79ac3;
 @black: #272822;
 @gray: #bdc3c7;
 @raspberry: #990033;
@@ -17,12 +16,12 @@ body {
 
 #user #signin:hover {
     text-decoration: none;
-    color: white;
+    color: lighten(@purple, 20%);
 }
 
 #sources a {
     font-size: 20px;
-    color: @lightPurple;
+    color: lighten(@purple, 10%);
     line-height: 50px;
 }
 
