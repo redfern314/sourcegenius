@@ -1,4 +1,5 @@
 if (Meteor.isClient) {
+  // enable {{loginButtons}}
   Accounts.ui.config({
     requestPermissions: {
       github: ['user', 'repo']
@@ -34,6 +35,16 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
+
+    // set up the OAuth2 service
+    Accounts.loginServiceConfiguration.remove({
+      service: "github"
+    });
+    Accounts.loginServiceConfiguration.insert({
+      service: "github",
+      clientId: process.env.GITHUB_ID,
+      secret: process.env.GITHUB_SECRET
+    });
   });
 
 
