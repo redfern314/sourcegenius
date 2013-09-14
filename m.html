@@ -3,7 +3,47 @@
 </head>
 
 <body>
-  {{> hello}}
+    <div class="row">
+        <div class="container code-container">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="annotation">
+                    <div class="content row">
+                        <div class="col-md-12">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.        
+                        </div>
+                    </div>
+                    <div class="author row">
+                        <div class="photo col-md-4">
+                            <img src="http://placekitten.com/75/75" alt="">
+                        </div>
+                        <div class="info col-md-8">
+                            <h2 class="name">Jesse Pollak</h2>
+                            <h3 class="handle">jessepollak</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="snippet">
+                    <div class="line annotated">
+                        <pre><code class="language-javascript">Template.hello.greeting = function () {</code></pre>
+                    </div>
+
+                    <div class="line">
+                        <pre><code class="language-javascript">  return "Welcome to m.";</code></pre>
+                    </div>
+
+                    <div class="line">
+                        <pre><code class="language-javascript">};</code>
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <template name="hello">

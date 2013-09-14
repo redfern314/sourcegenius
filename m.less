@@ -1,0 +1,107 @@
+@import "/packages/bootstrap3-less/bootstrap.lessimport";
+
+@purple: #9b59b6;
+@black: #272822;
+
+body {
+    background: @purple;
+}
+
+.code-container {
+    margin-top: 100px;
+    .snippet {
+        background: @black;
+        padding: 20px;
+        border-radius: 10px;
+        .line {
+            &:hover {
+                opacity: .8;
+                cursor: pointer;
+                &:not(.annotated) {
+                   pre { background: lighten(@black, 10%); }
+                }
+            }
+            &.annotated {
+                pre {
+                    background: lighten(@black, 10%);
+                    border-radius: 3px;
+                    position: relative;
+                    &:hover {
+                        &:after {
+                            color: @purple;
+                        }
+                    }
+                    &:after {
+                        content: "...";
+                        position: absolute;
+                        right: 5px;
+                        bottom: 1px;
+                        font-size: 10px;
+                        text-shadow: none;
+                    }
+                }
+            }
+            pre {
+                border: none;
+                border-radius: 0;
+                margin: 0;
+                padding-top: 2px;
+                padding-bottom: 3px;
+                code {
+                    padding: 0;
+                    margin: 0;
+                    height: 20px;
+                    text-shadow: none;
+                }
+            }
+        }
+    }
+
+    .annotation {
+        @color: white;
+        background: @color;
+        position: absolute;
+        right: 100px;
+        top: 100px;
+        z-index: 3;
+        padding: 40px;
+        width: 400px;
+        @border-size: 30px;
+        @border-offset: 30px;
+        &:before {
+            content: " ";
+            position: absolute;
+            top: @border-offset;
+            left: -@border-size;
+            border-top: transparent @border-size solid;
+            border-right: white @border-size solid;
+       } 
+       &:after {
+            content: " ";
+            position: absolute;
+            top: @border-size + @border-offset;
+            left: -@border-size;
+            border-top: white @border-size solid;
+            border-left: transparent @border-size solid;
+        }
+        .author {
+            margin-top: 20px;
+            .photo {
+                @size: 75px;
+                img {
+                    margin: auto;
+                    background: @purple;
+                    height: @size;
+                    width: @size;
+                    border-radius: @size / 2;
+                }
+            }
+            .info {
+                margin-top: 5px;
+                .name, .handle {
+                    margin: 0;
+                }
+            }
+        }
+    }
+}
