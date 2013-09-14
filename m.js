@@ -2,6 +2,7 @@ File = new Meteor.Collection("files");
 Annotations = new Meteor.Collection('annotations');
 
 if (Meteor.isClient) {
+  Session.set('Source.Annotation.editing', null)
     Session.set("creatingNewFile", false);
 
     Handlebars.registerHelper('index', function() {
@@ -63,7 +64,6 @@ if (Meteor.isClient) {
       },
 
       'keydown #newFileEntry' : function(ev, page) {
-        console.log(ev);
         if(ev.keyCode==9) {
           ev.preventDefault();
           insertAtCaret("newFileEntry","    ");
@@ -125,6 +125,13 @@ if (Meteor.isClient) {
         }
       }
     });
+
+    Template.annotation.rendered = function() {
+      var textarea
+      if ( ( textarea = $('textarea[data-id='+ Session.get('Source.Annotation.editing') +']') ).length ) {
+        textarea.setSelection(textarea.val().length);
+      }
+    }
 
     Template.annotation.events({
       'click .edit span' : function(ev) {
