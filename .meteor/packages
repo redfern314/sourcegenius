@@ -7,6 +7,9 @@ standard-app-packages
 autopublish
 insecure
 preserve-inputs
+bootstrap3-less
+less
+prismjs
 accounts-base
 router
 accounts-ui

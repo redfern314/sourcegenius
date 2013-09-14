@@ -1,0 +1,15 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "prismjs": {}
+    },
+    "packages": {
+      "prismjs": {
+        "git": "https://github.com/santihbc/meteor-prism-js.git",
+        "tag": "v0.1.0",
+        "commit": "4c5e65fff43765569d489af826b23c7a14e75982"
+      }
+    }
+  }
+}

@@ -3,28 +3,111 @@
 </head>
 
 <body>
-  {{ loginButtons }}
-  {{> codeSnippet}}
-  {{> newSource}}
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+			<header>
+				<div class="row">
+				    <div class="col-md-12">
+				        <ul class="actions">
+				            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
+				            <li>
+								{{ loginButtons }}
+				            </li>
+				        </ul>
+				    </div>
+				</div>
+			</header>
+
+			<div class="wrapper">
+
+			{{ renderPage }}
+				
+			</div>
+
+          	<footer>
+          	</footer>
+      	</div>
+    </div>
 </body>
 
 <template name="login">
-  {{loginButtons}}
+    {{loginButtons}}
 </template>
 
-<template name="codeSnippet">
-  {{#each numberLines linesOfCode}}
-  <div class="line" data-id="{{this.value}}">{{this.name}}</div>
-  {{/each}}
-  {{#each annotations}}
-  <div class="annotation">{{this}}</div>
-  {{/each}}
+<template name="newFile">
+    <div class="row newFile">
+    	<div class="col-md-12">
+			<textarea width='500' class="language-any"></textarea>
+			<button class='btn' id='submit-new-file'>Submit</button>
+    	</div>
+    </div>
+
+<template name="annotation">
+    <div class="annotation">
+	    <div class="content row">
+	        <div class="col-md-12">
+	            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.        
+	        </div>
+	    </div>
+	    <div class="author row">
+	        <div class="photo col-md-4">
+	            <img src="http://placekitten.com/75/75" alt="">
+	        </div>
+	        <div class="info col-md-8">
+	            <h2 class="name">Jesse Pollak</h2>
+	            <h3 class="handle">jessepollak</h3>
+	        </div>
+	    </div>
+	</div>
 </template>
 
-<template name="newSource">
-  <div>
-    <h1>Add new source code</h1>
-    <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
-    <button class='btn' id='submit-new-source'>Submit</button>
-  </div>
+<template name="show">
+	<div class="row">
+	    <div class="col-md-12 code-container">
+	    	{{#each splitLines}}
+  			  	<pre><code class='language-javascript'><div class="line" data-id="{{this.index}}">{{this.text}}</div></code></pre>
+			{{/each}}
+		</div>
+	</div>
+</template>
+
+<template name="signIn">
+	{{ loginButtons }}
+	{{> newSource}}
+
+	<div class='test-triangle'>
+	</div>
+</template>
+
+<template name="sources">
+  {{#if viewing }}
+    {{> currentSource viewing }}
+  {{ else }}
+    <div id="your-sources">
+      {{#each userSources}}
+        {{> userSourceTemplate }}
+      {{/each}}
+     </div>
+    <div id="shared-with-you">
+      {{#each sharedSources }}
+        {{> sharedSourceTemplate }}
+      {{/each }}
+    </div>
+    {{> newSource}}
+  {{/if }}
+</template>
+
+<template name="userSourceTemplate">
+</template>
+
+<template name="sharedSourceTemplate">
+</template>
+
+<template name="currentSource">
 </template>

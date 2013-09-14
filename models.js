@@ -1,1 +1,0 @@
-Source = new Meteor.Collection("sources");
