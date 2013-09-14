@@ -169,6 +169,13 @@
 <template name="show">
 	<div class="row">
     <div class="col-md-12 code-container">
+        <h2 class='clearfix'>
+          <img class="author" src="{{ authorPhoto }}">&nbsp;&nbsp;{{ prettyTitle title }}
+            <span class='pull-right'>
+              {{#if canWatch}}
+                <button id='watch' class='btn btn-success'>Watch</button></span>
+              {{/if}}
+        </h2>
         <div class="snippet">
           {{#isolate}}
             {{#each splitLines}}
