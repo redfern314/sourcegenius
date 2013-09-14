@@ -12,7 +12,7 @@
 				        <ul class="actions">
 				            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
 				            <li>
-								{{ loginButtons }}
+				            	{{> user }}
 				            </li>
 				        </ul>
 				    </div>
@@ -31,7 +31,22 @@
     </div>
 </body>
 
-<template name="login">
+
+<template name="user">
+	{{#if loggedIn }}
+	<div id="user">
+		<img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}>
+	</div>
+	{{ else }}
+	<div id="user">
+		<a href="#">Sign In</a>
+	</div>
+	{{/if }}
+</template>
+
+<template name="hello">
+    <h1>Hello World!</h1>
+    {{greeting}}
     {{loginButtons}}
 </template>
 

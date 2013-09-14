@@ -22,14 +22,6 @@ if (Meteor.isClient) {
     } 
   });
 
-  // enable {{loginButtons}}
-  Accounts.ui.config({
-    requestPermissions: {
-      github: ['user', 'repo']
-    },
-    passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
-  });
-
   Template.newFile.events({
     'click #submit-new-file' : function(ev, page) {
       var textbox = page.find('textarea');
@@ -42,6 +34,35 @@ if (Meteor.isClient) {
           Meteor.Router.to('/show/' + result);
         }
       });
+
+
+    }
+  })
+
+  Template.user.events({
+    'click #user' : function(ev, page) {
+      var loggedIn = Session.get("loggedIn");
+      if(loggedIn) {
+        Session.set("loggedIn",false);
+      } else {
+        Meteor.loginWithGithub({
+          requestPermissions: ['user', 'public_repo']
+        }, function (err) {
+          if (err) {
+            Session.set('errorMessage', err.reason || 'Unknown error');
+          } else {
+            // get the user's avatar
+            HTTP.call("GET", "https://api.github.com/user?access_token="+
+              Meteor.user().services.github.accessToken,
+              function (error, result) {
+                if (result.statusCode === 200) {
+                  Session.set("propic", result.data.avatar_url);
+                  Session.set("loggedIn",true);
+                }
+            });
+          }
+        });
+      }
     }
   })
 
@@ -53,6 +74,14 @@ if (Meteor.isClient) {
 			Session.set('lineId', null);
 		}
    });
+
+  Template.user.URL = function() {
+    return Session.get('propic');
+  }
+
+  Template.user.loggedIn = function() {
+    return Session.get("loggedIn");
+  }
 
   Template.sources.viewing = function() {
     return Session.get('viewing') ? true : false;
