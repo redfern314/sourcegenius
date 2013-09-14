@@ -3,33 +3,37 @@ var annotations = {1:"cooodddee", 2:"fuuuunnnn,yaaayyy"};
 
 if (Meteor.isClient) {
 
-	var currLine = 0;
-	var fileId = 1;
-	var lineId = 1;
+	Session.set('lineId', 0);
+
+	Handlebars.registerHelper('numberLines', function(obj) {
+		result = [];
+		var lineCount = 0;
+		_.each(obj, function(line){
+			result.push({name:line, value:lineCount});
+			lineCount++;
+		});
+		return result;
+	});
 
 	Template.codeSnippet.linesOfCode = function () {
-		return getCodeSnippetLines(fileId);
+		return getCodeSnippetLines();
 	};
 
 	Template.codeSnippet.annotations = function() {
-		if (lineId) {
-			return annotations[lineId].split(",");
-			//return annotations.find(lineId).fetch();
+		if (Session.get('lineId')) {
+			return annotations[Session.get('lineId')].split(",");
+			//return annotations.find(Session.get('lineId')).fetch();
 		} else {
 			return [];
 		}
 	};
 
-	Template.codeSnippet.nextLine = function() {
-		return currLine++;
-	};
-
 	Template.codeSnippet.events ({
 		'mouseenter .line' : function (event) {
-			lineId = event.target.dataset.id;
+			Session.set('lineId', event.target.dataset.id);
 		},
 		'mouseleave .line' : function (event) {
-			lineId = null;
+			Session.set('lineId', null);
 		}
 	});
 
@@ -61,7 +65,9 @@ if (Meteor.isServer) {
   });
 }
 
-function getCodeSnippetLines(fileId) {
+function getCodeSnippetLines() {
+	// get file id from url
+	var fileId = 1;
 	if (fileId) {
 		//return files.find(fileId).fetch().split("\n");
 		return codeSnippet.split("\n");

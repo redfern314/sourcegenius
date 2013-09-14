@@ -13,8 +13,8 @@
 </template>
 
 <template name="codeSnippet">
-  {{#each linesOfCode}}
-  <div class="line" data-id="{{nextLine}}">{{this}}</div>
+  {{#each numberLines linesOfCode}}
+  <div class="line" data-id="{{this.value}}">{{this.name}}</div>
   {{/each}}
   {{#each annotations}}
   <div class="annotation">{{this}}</div>
