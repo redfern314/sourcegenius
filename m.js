@@ -2,7 +2,10 @@ if (Meteor.isClient) {
   Meteor.Router.add({
     '/': 'newFile',
     '/new': 'newFile',
-    '/show/:id': 'show'
+    '/show/:id': function(id) {
+      Session.set('fileID', id);
+      return 'show';
+    } 
   });
 
   // enable {{loginButtons}}
@@ -32,8 +35,8 @@ if (Meteor.isClient) {
     return Session.get('viewing') ? true : false;
   }
 
-  Template.show.currentFile = function() {
-    return File.find(id).fetch()[0];
+  Template.show.file = function() {
+    return File.find(Session.get('fileID')).fetch()[0];
   }
 
   Template.sources.userSources = function() {
