@@ -24,7 +24,10 @@ if (Meteor.isClient) {
         },
         '/home': 'home',
         '/new': 'newFile',
-        '/github': 'github',
+        '/github': function() {
+          Session.get('repos', false);
+          return 'github';
+        },
         '/show/:id': function(id) {
           Session.set('fileID', id);
           return 'show';
