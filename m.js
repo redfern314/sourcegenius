@@ -60,7 +60,7 @@ if (Meteor.isClient) {
           top: $line.offset().top + $line.height() / 2,
           left: $line.position().left + $line.width() + 100,
           overflow: "display"
-        })
+        });
 
         ev.stopPropagation();
       },
@@ -84,6 +84,29 @@ if (Meteor.isClient) {
         }
       }
     });
+
+    Template.annotation.events({
+      'click .edit' : function(ev) {
+        Session.set("Source.Annotation.editing", $(ev.target).data('id'));
+      },
+      'keydown textarea' : function(ev) {
+        var keyCode = ev.keyCode || ev.which;
+        if (keyCode == 13) {
+          var text = $(ev.target).val();
+          Session.set("Source.Annotation.editing", null);
+          Annotations.update( $(ev.target).data('id'),{$set : {text: text } });
+        }
+      }
+    });
+
+
+    Template.annotation.canEdit = function(annotation) {
+      return Meteor.userId() == annotation.author._id;
+    }
+
+    Template.annotation.editing = function(annotation) {
+      return Session.get("Source.Annotation.editing") == annotation._id;
+    }
 
     Template.annotations.annos = function() {
       return Annotations.find({

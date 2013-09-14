@@ -71,12 +71,18 @@
 <template name="annotation">
     <div class="annotation">
       <div class="content row">
+        {{#if editing this}}
+          <textarea data-id='{{ _id }}'>{{ text }}</textarea>
+        {{ else }}
           <div class="col-md-10">
-              {{ text  }}      
+              {{ text  }}  
           </div>
-          <div class="col-mid-2" style='text-align:right;'>
-            
-          </div>
+          {{#if canEdit this}}
+            <div class="col-mid-2" style='text-align:right;'>
+              <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'>Edit</a>
+            </div>
+          {{/if}}
+        {{/if}}
       </div>
       <div class="author row">
           <div class="photo col-md-4">
