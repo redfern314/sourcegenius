@@ -39,8 +39,33 @@ if (Meteor.isClient) {
             Meteor.Router.to('/show/' + result);
           }
         });
+      }
+    });
 
-
+    Template.show.events({
+      'hover .line' : function(ev) {
+        Annotations.find({
+          'line': $(ev.target).data('id'), 
+          'file': Session.get('file')._id 
+        });
+      },
+      'click .line' : function(ev) {
+        Session.set('lineAnnotationNumber', $(ev.target).data('id'));
+      },
+      'enter #annotation' : function(ev) {
+        var annotationText = $("#annotation").val();
+        Annotation.insert({ 
+          author: Meteor.user(), 
+          file: Session.get('file')._id,
+          line: Session.get('lineAnnotationNumber'),
+          text: annotationText
+        }, function(error, result) {
+          if (error) {
+            alert("An unknown error has occurred");
+          } else {
+            console.log("SUCCESS INSERTING ANNOTATION", result); 
+          }
+        });
       }
     })
 
