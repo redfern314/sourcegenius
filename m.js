@@ -28,7 +28,6 @@ if (Meteor.isClient) {
 
     Meteor.Router.filters({
       'checkLoggedIn': function(page) {
-        console.log('hi');
         if (Meteor.user()) {
           return page;
         } else {
