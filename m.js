@@ -180,7 +180,14 @@ if (Meteor.isClient) {
   	var lines = File.find(Session.get('fileID')).fetch()[0].file.split("\n"),
     	resultsArray = [];
     	_.each(lines, function(line) {
-    		resultsArray.push({text: line, index: resultsArray.length, language: file.language});
+        var isAnnotated = "";
+        if (Annotations.find({
+                'line': resultsArray.length, 
+                'file': Session.get('fileID')
+              }).fetch().length > 0) {
+          isAnnotated = "annotated";
+        }
+    		resultsArray.push({text: line, index: resultsArray.length, language: file.language, isAnnotated: isAnnotated});
     	});
     	return resultsArray;
   }
