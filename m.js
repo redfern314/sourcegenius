@@ -175,7 +175,7 @@ if (Meteor.isClient) {
 	});
 
   Template.user.events({
-    'click #signin' : function(ev, page) {
+    'click #signin,#propic' : function(ev, page) {
       var loggedIn = SessionAmplify.get("loggedIn");
       if(loggedIn) {
         SessionAmplify.set("loggedIn",false);
