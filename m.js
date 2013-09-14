@@ -124,7 +124,7 @@ if (Meteor.isClient) {
     });
 
     Template.user.loggedIn = Template.home.loggedIn = function() {
-      return SessionAmplify.get('loggedIn');
+      return SessionAmplify.get("loggedIn");
     }
 
     Template.home.creatingNewFile = function() {
@@ -176,9 +176,9 @@ if (Meteor.isClient) {
 
   Template.user.events({
     'click #signin,#propic' : function(ev, page) {
-      var loggedIn = SessionAmplify.get("loggedIn");
-      if(loggedIn) {
+      if(SessionAmplify.get("loggedIn")) {
         SessionAmplify.set("loggedIn",false);
+        Meteor.logout();
       } else {
         Meteor.loginWithGithub({
           requestPermissions: ['user', 'public_repo']
