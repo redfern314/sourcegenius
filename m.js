@@ -29,7 +29,7 @@ if (Meteor.isClient) {
         var language = hljs.highlightAuto(file).language;
 
         File.insert({ 
-          'file' : file, 
+          'file' : $.trim(file), 
           shared: [], 
           author: Meteor.userId(), 
           language: language,
@@ -87,9 +87,9 @@ if (Meteor.isClient) {
 
         ev.stopPropagation();
       },
-      'keydown #annotation' : function(ev) {
+      'keydown #annotation, click #annotateBtn' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
-        if ( keyCode == 13 ) {
+        if ( keyCode == 13 || ev.type == "click") {
           Annotations.insert({ 
             author: Meteor.user(), 
             file: Session.get('fileID'),
@@ -110,8 +110,8 @@ if (Meteor.isClient) {
     });
 
     Template.annotation.events({
-      'click .edit' : function(ev) {
-        Session.set("Source.Annotation.editing", $(ev.target).data('id'));
+      'click a span' : function(ev) {
+        Session.set("Source.Annotation.editing", $(ev.target).parents('.edit').data('id'));
       },
       'keydown textarea' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
@@ -224,14 +224,20 @@ if (Meteor.isClient) {
   	var lines = File.find(Session.get('fileID')).fetch()[0].file.split("\n"),
     	resultsArray = [];
     	_.each(lines, function(line) {
-        var isAnnotated = "";
-        if (Annotations.find({
-                'line': resultsArray.length, 
-                'file': Session.get('fileID')
-              }).fetch().length > 0) {
-          isAnnotated = " annotated";
+        var cssClasses = "";
+        if (line != "") {
+          cssClasses += "line";
+          if (Annotations.find({
+                  'line': resultsArray.length, 
+                  'file': Session.get('fileID')
+                }).fetch().length > 0) {
+            cssClasses += " annotated";
+          }
         }
-    		resultsArray.push({text: line, index: resultsArray.length, language: file.language, isAnnotated: isAnnotated});
+        else {
+          cssClasses += "emptyLine";
+        }
+    		resultsArray.push({text: line, index: resultsArray.length, language: file.language, cssClasses: cssClasses});
     	});
     	return resultsArray;
   }

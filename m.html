@@ -103,31 +103,33 @@
         <h1>Add an annotation</h1>
         {{/if }}
         <textarea id='annotation'></textarea>
-        <button type="button" class="btn btn-default btn-block b">annotate</button>
+        <button id="annotateBtn" type="button" class="btn btn-default btn-block b">annotate</button>
     </div>
 </template>
 
 <template name="annotation">
     <div class="annotation">
-      <div class="content row">
-        {{#if editing this}}
-          <textarea data-id='{{ _id }}'>{{ text }}</textarea>
-        {{ else }}
-          <div class="col-md-10">
-              <p>{{ text  }}</p>
-          </div>
-          {{#if canEdit this}}
-            <div class="col-mid-2" style='text-align:right;'>
-              <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'>Edit</a>
+        <div class="content row">
+            <div class="col-md-12">
+                {{#if editing this}}
+
+                    <textarea data-id='{{ _id }}'>{{ text }}</textarea>
+                {{ else }}
+                    <p>{{ text  }}</p>
+                {{/if}}
             </div>
-          {{/if}}
-        {{/if}}
-      </div>
-      <div class="author">
-          <img src="http://placekitten.com/75/75" alt="">
-          <h6 class="handle">{{ author.services.github.username }}</h6>
-          <div class="cler"></div>
-      </div>
+        </div>
+        <div class="author">
+            <img src="http://placekitten.com/75/75" alt="">
+            <h6 class="handle">{{ author.services.github.username }}</h6>
+            <div class="cler"></div>
+        </div>
+      {{# if editing this }}
+      {{ else }}
+      {{#if canEdit this}}
+          <a style='cursor:pointer;' class='edit' data-id='{{ _id }}'><span class="glyphicon glyphicon-edit"></span></a>
+      {{/if}}
+      {{/if}}
       <div class="clear"></div>
   </div>
 </template>
@@ -137,7 +139,7 @@
     <div class="col-md-12 code-container">
         <div class="snippet">
             {{#each splitLines}}
-                <div class="line{{this.isAnnotated}}" data-id="{{this.index}}">
+                <div class="{{this.cssClasses}}" data-id="{{this.index}}">
                     <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}
