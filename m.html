@@ -6,43 +6,25 @@
     <div class="container">
       <div class="row">
         <div class="col-md-8 col-md-offset-2">
-          <header>
-            <div class="row">
-                <div class="col-md-12">
-                    <ul class="actions">
-                        <li><span class="glyphicon glyphicon-plus"></span></li>
-                    </ul>
-                </div>
-            </div>
+			<header>
+				<div class="row">
+				    <div class="col-md-12">
+				        <ul class="actions">
+				            <li><span class="glyphicon glyphicon-plus"></span></li>
+				        </ul>
+				    </div>
+				</div>
+			</header>
 
-          </header>
-          <div class="row">
-            <div class="col-md-12 code-container">
-                
-                <div class="snippet">
-                    <div class="line annotated">
-                        <pre><code class="language-javascript">Template.hello.greeting = function () {</code></pre>
-                    </div>
+			<div class="wrapper">
 
-                    <div class="line">
-                        <pre><code class="language-javascript">  return "Welcome to m.";</code></pre>
-                    </div>
+			{{ renderPage }}
+				
+			</div>
 
-                    <div class="line">
-                        <pre><code class="language-javascript">};</code>
-                        </pre>
-                    </div>
-                </div>
-              </div>
-          </div>
-          {{ loginButtons }}
-          {{> newSource}}
-
-          <div class='test-triangle'>
-          </div>
-          
-        </div>
-      </div>
+          	<footer>
+          	</footer>
+      	</div>
     </div>
 </body>
 
@@ -53,11 +35,12 @@
     <input type="button" value="Click" />
 </template>
 
-<template name="newSource">
-    <div>
-         <h1>Add new source code</h1>
-         <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
-         <button class='btn' id='submit-new-source'>Submit</button>
+<template name="newFile">
+    <div class="row newFile">
+    	<div class="col-md-12">
+			<textarea width='500'></textarea>
+			<button class='btn' id='submit-new-file'>Submit</button>
+    	</div>
     </div>
 </template>
 
@@ -82,6 +65,37 @@
 	            <h3 class="handle">jessepollak</h3>
 	        </div>
 	    </div>
+	</div>
+</template>
+
+<template name="show">
+	<div class="row">
+	    <div class="col-md-12 code-container">
+	        
+	        <div class="snippet">
+	            <div class="line annotated">
+	                <pre><code class="language-javascript">Template.hello.greeting = function () {</code></pre>
+	            </div>
+
+	            <div class="line">
+	                <pre><code class="language-javascript">  return "Welcome to m.";</code></pre>
+	            </div>
+
+	            <div class="line">
+	                <pre><code class="language-javascript">};</code>
+	                </pre>
+	            </div>
+	        </div>
+
+		</div>
+	</div>
+</template>
+
+<template name="signIn">
+	{{ loginButtons }}
+	{{> newSource}}
+
+	<div class='test-triangle'>
 	</div>
 </template>
 

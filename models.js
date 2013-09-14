@@ -1,1 +1,1 @@
-Source = new Meteor.Collection("sources");
+File = new Meteor.Collection("files");

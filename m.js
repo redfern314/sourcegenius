@@ -6,11 +6,11 @@ if (Meteor.isClient) {
     passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
   });
 
-  Template.newSource.events({
-    'click #submit-new-source' : function(ev, page) {
+  Template.newFile.events({
+    'click #submit-new-file' : function(ev, page) {
       var $textbox = page.find('textarea');
-      var source = $textbox.val();
-      Source.insert({ 'source' : source, shared: [], author: Meteor.userId }, function(error, result) {
+      var file = $textbox.val();
+      File.insert({ 'file' : file, shared: [], author: Meteor.userId }, function(error, result) {
         if (error) {
           alert('An unknown error occurred');
         } else {
@@ -19,10 +19,23 @@ if (Meteor.isClient) {
       });
     }
   })
+
+  Meteor.Router.add({
+    '/': 'newFile',
+    '/new': 'newFile',
+    '/show/:id': function(id) {
+      Session.set('fileID', id);
+      return 'show'
+    }
+  });
+
 }
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
   });
+
+
+
 }
