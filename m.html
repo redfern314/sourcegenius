@@ -60,14 +60,12 @@
 </template>
 
 <template name="annotations">
-  <div class='info'>
     {{#each annos}}
       {{#isolate}}
         {{> annotation }}
       {{/isolate}}
     {{/each}}
-  </div>
-  <textarea id='annotation' placeholder='Your comment here!'></textarea>
+    <textarea id='annotation' placeholder='Your comment here!'></textarea>
 </template>
 
 <template name="annotation">
@@ -90,19 +88,19 @@
 
 <template name="show">
 	<div class="row">
-    <div class="col-md-12 code-container">
-        <div class="snippet">
-            {{#each splitLines}}
-                <div class="line" data-id="{{this.index}}">
-                    <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
-                </div>
-            {{/each}}
+        <div class="col-md-12 code-container">
+            <div class="snippet">
+                {{#each splitLines}}
+                    <div class="line" data-id="{{this.index}}">
+                        <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
+                    </div>
+                {{/each}}
+            </div>
         </div>
-    </div>
+	</div>
     <div class='annotations' style='display:none;'>
       {{> annotations}}
     </div>
-	</div>
 </template>
 
 <template name="signIn">
@@ -127,11 +125,3 @@
   {{/if }}
 </template>
 
-<template name="userSourceTemplate">
-</template>
-
-<template name="sharedSourceTemplate">
-</template>
-
-<template name="currentSource">
-</template>

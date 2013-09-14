@@ -37,7 +37,7 @@ if (Meteor.isClient) {
 
     $(document).click(function() {
       console.log("removing");
-      $(".annotations").slideUp(200).find('.info').empty();
+      $(".annotations").hide().find('.info').empty();
       Session.set('annotations', false);
     });
 
@@ -49,13 +49,19 @@ if (Meteor.isClient) {
 
     Template.show.events({
       'click .line' : function(ev) {
-        $(".annotations").slideDown(200);
-        $target = $(ev.target);
-        while ( !$target.hasClass('line') ) {
-          $target= $($target.parent());
-        }
+        $(".annotations").show();
+        $target = $(ev.target).parents('.line');
         var lineId = $target.data('id');
         Session.set('lineAnnotationNumber', lineId);
+
+        var $line = $target.find('code');
+
+        $('.annotations').css({
+          top: $line.offset().top + $line.height() / 2,
+          left: $line.position().left + $line.width() + 100,
+          overflow: "display"
+        })
+
         ev.stopPropagation();
       },
       'keydown #annotation' : function(ev) {
@@ -71,7 +77,6 @@ if (Meteor.isClient) {
             if (error) {
               alert("An unknown error has occurred");
             } else {
-              console.log("SUCCESS INSERTING ANNOTATION", result); 
               $("#annotation").val('');
               ev.preventDefault();
               ev.stopPropagation();
@@ -83,9 +88,9 @@ if (Meteor.isClient) {
 
     Template.annotations.annos = function() {
       return Annotations.find({
-                'line': Session.get('lineAnnotationNumber'), 
-                'file': Session.get('fileID')
-              }).fetch();
+        'line': Session.get('lineAnnotationNumber'), 
+        'file': Session.get('fileID')
+      }).fetch();
     }
 
     Template.user.events({
