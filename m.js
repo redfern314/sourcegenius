@@ -124,7 +124,7 @@ if (Meteor.isClient) {
     });
 
     Template.user.loggedIn = Template.home.loggedIn = function() {
-      return Meteor.userId();
+      return SessionAmplify.get('loggedIn');
     }
 
     Template.home.creatingNewFile = function() {
