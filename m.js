@@ -28,7 +28,6 @@ if (Meteor.isClient) {
 
     Meteor.Router.filters({
       'checkLoggedIn': function(page) {
-        console.log('hi');
         if (Meteor.user()) {
           return page;
         } else {
@@ -153,6 +152,14 @@ if (Meteor.isClient) {
     Template.user.loggedIn = Template.home.loggedIn = function() {
       return SessionAmplify.get("loggedIn");
     }
+
+    Template.sourceSynopsisTemplate.prettifyTitle = function(title) {
+      return title ? title : 'untitled'
+    }
+
+   Template.sourceSynopsisTemplate.authorName = function(id) {
+     return Meteor.users.find(id).fetch()[0].profile.username;
+   }
 
     Template.home.creatingNewFile = function() {
       return Session.get('creatingNewFile');
@@ -318,6 +325,7 @@ if (Meteor.isClient) {
                   SessionAmplify.set("loggedIn",true);
                   Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.propic":result.data.avatar_url}})
                   Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.username":Meteor.user().services.github.username}})
+                  Meteor.Router.to('/home');
                 }
             });
           }

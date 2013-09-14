@@ -3,17 +3,30 @@
 @purple: #9b59b6;
 @black: #272822;
 @gray: #bdc3c7;
+@raspberry: #990033;
 
 body {
     background: @purple;
 }
 
-a {
+#sources a:hover {
     text-decoration: none;
+    color: white;
+}
+
+#user #signin:hover {
+    text-decoration: none;
+    color: lighten(@purple, 40%);
+}
+
+#sources a {
+    font-size: 20px;
+    color: lighten(@purple, 20%);
+    line-height: 50px;
 }
 
 #annotateBtn {
-    background-color: @purple;
+    background-color: @raspberry;
 }
 
 #index {
@@ -23,7 +36,7 @@ a {
     }
     h1 {
         @font-size: 80px;
-        margin-top: 200px;
+        margin-top: 100px;
         font-size: @font-size;
         .source {
             font-family: Consolas, Monaco, 'Andale Mono', monospace;
@@ -251,12 +264,13 @@ header {
         border-radius: 10px;
 
         .emptyLine {
+            height: 18px;
             pre {
                 border: none;
                 border-radius: 0;
                 margin: 0;
-                padding-top: 2px;
-                padding-bottom: 3px;
+                height: 16px;
+                padding: 0;
                 code {
                     padding: 0;
                     margin: 0;
