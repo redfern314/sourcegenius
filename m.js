@@ -235,6 +235,7 @@ if (Meteor.isClient) {
   }
 
   var getRepos = function(page) {
+    Session.set('repos', true);
     // get repos from this user
     var username = $(page.find("#username"))[0].value;
     HTTP.call("GET", "https://api.github.com/users/"+username+"/repos?access_token="+
@@ -281,10 +282,15 @@ if (Meteor.isClient) {
               Meteor.user().services.github.accessToken,
       function (error, result) {
         if (result.statusCode === 200) {
-          console.log(result.data[0].sha);
           getTree(user,repo,result.data[0].sha);
         }
     });
+  }
+
+  Template.github.rendered = function() {
+    if (!Session.get('repos')) {
+      getRepos($(document));
+    }
   }
 
   Template.github.events({
@@ -312,13 +318,11 @@ if (Meteor.isClient) {
         }
       };
 
-      console.log(curritem);
       if(Session.get("repomode")=="repo") {
         // get files in repo
         Session.set("currentrepo",itemname);
         Session.set("repomode","tree");
 
-        console.log("repo");
         getRootSHA(username,itemname);
       } else {
         // determine whether clicked obj is file or directory
