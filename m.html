@@ -36,7 +36,7 @@
     <div id="user">
         {{#if loggedIn }}
         	<a href="/github"><img id="octocat" src="/octocat.png" width="50" height="50"></a>
-            <a href="#"><img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}></a>
+            <a href="#" class="sign-out"><img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}></a>
         {{ else }}
             <a id="signin" href="#">sign in</a>
         {{/if }}
@@ -105,7 +105,7 @@
         {{else}}
         <h1>Add an annotation</h1>
         {{/if }}
-        <textarea id='annotation'></textarea>
+        <textarea id='annotation' placeholder="Add a new comment"></textarea>
     </div>
 </template>
 

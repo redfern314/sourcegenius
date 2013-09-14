@@ -28,6 +28,27 @@ header {
             #user{
                 min-height:50px;
                 min-width:50px;
+                .sign-out {
+                    position: relative;
+                    &:hover {
+                        &:after {
+                            display: block;
+                        }
+                    }
+                    &:after {
+                        content: "sign out";
+                        position: absolute;
+                        background: white;
+                        display: block;
+                        bottom: -34px;
+                        display: none;
+                        width: 50px;
+                        font-size: 10px;
+                        left: -12px;
+                        text-align: center;
+                        padding: 3px;
+                    }
+                }
                 #propic, #octocat {
                     @size: 25px;
                     width: @size;
@@ -167,7 +188,7 @@ header {
                     position: relative;
                     &:hover {
                         &:after {
-                            color: @purple;
+                            color: #3498db;
                         }
                     }
                     &:after {
@@ -285,6 +306,15 @@ header {
         }
     }
 
+}
+
+textarea {
+    resize: none;
+    border: none;
+    outline: none;
+    &:active {
+        outline: none;
+    }
 }
 
 .function.save { background-position: -5px top; }
