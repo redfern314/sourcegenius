@@ -24,7 +24,7 @@ if (Meteor.isClient) {
 
         var language = hljs.highlightAuto(file).language;
 
-        Files.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
+        File.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
           if (error) {
             alert('An unknown error occurred');
           } else {
@@ -110,6 +110,10 @@ if (Meteor.isClient) {
     		resultsArray.push({text: line, index: resultsArray.length, language: file.language});
     	});
     	return resultsArray;
+  }
+
+  Template.show.rendered = function() {
+    Prism.highlightAll();
   }
 
   Template.sources.userSources = function() {
