@@ -112,7 +112,7 @@
     <div class="col-md-12 code-container">
         <div class="snippet">
             {{#each splitLines}}
-                <div class="line{{this.isAnnotated}}" data-id="{{this.index}}">
+                <div class="{{this.cssClasses}}" data-id="{{this.index}}">
                     <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}

@@ -132,6 +132,23 @@ header {
         background: @black;
         padding: 20px;
         border-radius: 10px;
+
+        .emptyLine {
+            pre {
+                border: none;
+                border-radius: 0;
+                margin: 0;
+                padding-top: 2px;
+                padding-bottom: 3px;
+                code {
+                    padding: 0;
+                    margin: 0;
+                    height: 20px;
+                    text-shadow: none;
+                }
+            }
+        }
+
         .line {
             &.selected {
                 background: darken(@purple, 30%);

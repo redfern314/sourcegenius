@@ -26,7 +26,7 @@ if (Meteor.isClient) {
 
         var language = hljs.highlightAuto(file).language;
 
-        File.insert({ 'file' : file, shared: [], author: Meteor.userId, language: language }, function(error, result) {
+        File.insert({ 'file' : $.trim(file), shared: [], author: Meteor.userId, language: language }, function(error, result) {
           if (error) {
             alert('An unknown error occurred');
           } else {
@@ -206,14 +206,20 @@ if (Meteor.isClient) {
   	var lines = File.find(Session.get('fileID')).fetch()[0].file.split("\n"),
     	resultsArray = [];
     	_.each(lines, function(line) {
-        var isAnnotated = "";
-        if (Annotations.find({
-                'line': resultsArray.length, 
-                'file': Session.get('fileID')
-              }).fetch().length > 0) {
-          isAnnotated = " annotated";
+        var cssClasses = "";
+        if (line != "") {
+          cssClasses += "line";
+          if (Annotations.find({
+                  'line': resultsArray.length, 
+                  'file': Session.get('fileID')
+                }).fetch().length > 0) {
+            cssClasses += " annotated";
+          }
         }
-    		resultsArray.push({text: line, index: resultsArray.length, language: file.language, isAnnotated: isAnnotated});
+        else {
+          cssClasses += "emptyLine";
+        }
+    		resultsArray.push({text: line, index: resultsArray.length, language: file.language, cssClasses: cssClasses});
     	});
     	return resultsArray;
   }
