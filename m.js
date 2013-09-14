@@ -269,6 +269,7 @@ if (Meteor.isClient) {
                   SessionAmplify.set("loggedIn",true);
                   Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.propic":result.data.avatar_url}})
                   Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.username":Meteor.user().services.github.username}})
+                  Meteor.Router.to('/home');
                 }
             });
           }
