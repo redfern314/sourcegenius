@@ -9,6 +9,10 @@ if (Meteor.isClient) {
         return Meteor.Router.page() === "landing";
     });
 
+    Handlebars.registerHelper('isDir', function(type) {
+      return type === "tree";
+    })
+
     Meteor.startup(function() {
       Meteor.Router.add({
         '/': function() {
