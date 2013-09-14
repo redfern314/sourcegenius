@@ -3,10 +3,11 @@ Annotations = new Meteor.Collection('annotations');
 
 if (Meteor.isClient) {
     Session.set("creatingNewFile", false);
+
     Handlebars.registerHelper('index', function() {
-        console.log('hi');
-        return Meteor.Router.page() === "index";
+        return Meteor.Router.page() === "landing";
     });
+
     Meteor.startup(function() {
       Meteor.Router.add({
         '/': 'landing',
@@ -22,6 +23,19 @@ if (Meteor.isClient) {
         Meteor.Router.to(window.location.pathname)
       }, 500)
     }); 
+
+
+    Meteor.Router.filters({
+      'checkLoggedIn': function(page) {
+        console.log('hi');
+        if (Meteor.user()) {
+          return page;
+        } else {
+          return 'landing';
+        }
+      }
+    });
+    Meteor.Router.filter('checkLoggedIn', {only: 'home'});
 
     Template.newFile.events({
       'click #submit-new-file' : function(ev, page) {
@@ -84,7 +98,7 @@ if (Meteor.isClient) {
           top: $line.offset().top + $line.height() / 2,
           left: $container.position().left + $container.width(),
           overflow: "display",
-          width: $(window).width() - $container.offset().left - $container.width()
+          width: $(window).width() - $container.offset().left - $container.width() - 20
         });
 
         $('.annotations').css(Session.get('Source.Annotation.annoCSS'));
@@ -170,21 +184,12 @@ if (Meteor.isClient) {
     },
   });
 
-	Handlebars.registerHelper('numberLines', function(obj) {
-		result = [];
-		var lineCount = 0;
-		_.each(obj, function(line){
-			result.push({name:line, value:lineCount});
-			lineCount++;
-		});
-		return result;
-	});
-
   Template.user.events({
     'click #signin,#propic' : function(ev, page) {
       if(SessionAmplify.get("loggedIn")) {
         SessionAmplify.set("loggedIn",false);
         Meteor.logout();
+        Meteor.Router.to('/');
       } else {
         Meteor.loginWithGithub({
           requestPermissions: ['user', 'public_repo']

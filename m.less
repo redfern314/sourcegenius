@@ -16,6 +16,38 @@ a {
     background-color: @purple;
 }
 
+#index {
+    h1, h2 {
+        width: 100%;
+        text-align: center;
+    }
+    h1 {
+        @font-size: 80px;
+        margin-top: 200px;
+        font-size: @font-size;
+        .source {
+            font-family: Consolas, Monaco, 'Andale Mono', monospace;
+            color: lighten(@purple, 10%);
+        }
+        .genius {
+            color: lighten(@purple, 30%);
+            font-size: @font-size + 10;
+        }
+    }
+    h2 {
+        @color: lighten(@purple, 5%);
+        color: @color;
+        a {
+            color: @color;
+            font-size: 40px;
+            display: block;
+            &:hover {
+                color: lighten(@color, 10%);
+            }
+        }
+    }
+}
+
 header {
     padding: 10px 0;
     ul.actions {
@@ -116,10 +148,6 @@ header {
         background: @black;
         color: white;
     }
-}
-
-.annotations {
-    display: none;
 }
 
 .newFile {
@@ -275,11 +303,12 @@ header {
 
 
 .annotations {
+    display: none;
     @color: white;
     background: @color;
     position: absolute;
     z-index: 3;
-    padding: 40px;
+    padding: 20px;
     width: 400px;
     @border-size: 30px;
     @border-offset: 30px;
