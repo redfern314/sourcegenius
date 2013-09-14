@@ -11,7 +11,7 @@
 				    <div class="col-md-12">
 				        <ul class="actions">
 				            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
-				            <li>
+				            <li class="user">
 				            	{{> user }}
 				            </li>
 				        </ul>
@@ -33,15 +33,13 @@
 
 
 <template name="user">
-	{{#if loggedIn }}
-	<div id="user">
-		<img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}>
-	</div>
-	{{ else }}
-	<div id="user">
-		<a href="#">Sign In</a>
-	</div>
-	{{/if }}
+    <div id="user">
+        {{#if loggedIn }}
+            <img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}>
+        {{ else }}
+            <a href="#">sign In</a>
+        {{/if }}
+    </div>
 </template>
 
 <template name="hello">
@@ -53,27 +51,41 @@
 <template name="newFile">
     <div class="row newFile">
     	<div class="col-md-12">
-			<textarea width='500' class="language-any"></textarea>
-			<button class='btn' id='submit-new-file'>Submit</button>
+            <div class="text-container">
+                <textarea width='500' class="language-any"></textarea>
+                <div class="function save enabled" id='submit-new-file'></div>
+            </div>
     	</div>
     </div>
+</template>
+
+<template name="annotations">
+  <div class='info'>
+    {{#each annos}}
+      {{#isolate}}
+        {{> annotation }}
+      {{/isolate}}
+    {{/each}}
+  </div>
+  <textarea id='annotation' placeholder='Your comment here!'></textarea>
+</template>
 
 <template name="annotation">
     <div class="annotation">
-	    <div class="content row">
-	        <div class="col-md-12">
-	            {{ text  }}      
-	        </div>
-	    </div>
-	    <div class="author row">
-	        <div class="photo col-md-4">
-	            <img src="http://placekitten.com/75/75" alt="">
-	        </div>
-	        <div class="info col-md-8">
-	            <h3 class="handle">{{ author.services.github.username }}</h3>
-	        </div>
-	    </div>
-	</div>
+      <div class="content row">
+          <div class="col-md-12">
+              {{ text  }}      
+          </div>
+      </div>
+      <div class="author row">
+          <div class="photo col-md-4">
+              <img src="http://placekitten.com/75/75" alt="">
+          </div>
+          <div class="info col-md-8">
+              <h3 class="handle">{{ author.services.github.username }}</h3>
+          </div>
+      </div>
+  </div>
 </template>
 
 <template name="show">
@@ -82,10 +94,14 @@
         <div class="snippet">
             {{#each splitLines}}
                 <div class="line" data-id="{{this.index}}">
-                    <pre><code class='language-javascript'>{{this.text}}</code></pre>
+                    <pre><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}
         </div>
+    </div>
+    <div class='annotations' style='display:none;'>
+      {{> annotations}}
+    </div>
 	</div>
 </template>
 
