@@ -36,7 +36,6 @@ if (Meteor.isClient) {
     });
 
     $(document).click(function() {
-      console.log("removing");
       $(".annotations").hide();
       Session.set('annotations', false);
     });
@@ -54,12 +53,16 @@ if (Meteor.isClient) {
         var lineId = $target.data('id');
         Session.set('lineAnnotationNumber', lineId);
 
-        var $line = $target.find('code');
+        var $line = $target.find('code'),
+          $container = $('.snippet');
+
+        $target.find('pre').addClass('selected');
 
         $('.annotations').css({
           top: $line.offset().top + $line.height() / 2,
-          left: $line.position().left + $line.width() + 100,
-          overflow: "display"
+          left: $container.position().left + $container.width(),
+          overflow: "display",
+          width: $(window).width() - $container.offset().left - $container.width()
         })
 
         ev.stopPropagation();
@@ -90,6 +93,10 @@ if (Meteor.isClient) {
         'line': Session.get('lineAnnotationNumber'), 
         'file': Session.get('fileID')
       }).fetch();
+    }
+
+    Template.annotations.hasAnnotations = function() {
+      return Template.annotations.annos().length !== 0;
     }
 
   SessionAmplify = _.extend({}, Session, {

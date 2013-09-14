@@ -94,6 +94,9 @@ header {
         padding: 20px;
         border-radius: 10px;
         .line {
+            &.selected {
+                background: darken(@purple, 30%);
+            }
             &:hover {
                 background: lighten(@black, 10%);
                 cursor: pointer;
@@ -165,10 +168,24 @@ header {
         border-top: white @border-size solid;
         border-left: transparent @border-size solid;
     }
-    .author {
-        margin-top: 20px;
-        .photo {
-            @size: 75px;
+    .annotation {
+        background: darken(#FFF, 10%);
+        padding: 10px;
+        position: relative;
+        margin: 10px 0;
+        .author {
+            margin-top: 20px;
+            float: right;
+            @size: 25px;
+            img, .handle {
+                float: left;
+                margin: 0 auto;
+            }
+            .handle {
+                line-height: @size;
+                margin-left: 5px;
+                font-style: italic;
+            }
             img {
                 margin: auto;
                 background: @purple;
@@ -177,13 +194,27 @@ header {
                 border-radius: @size / 2;
             }
         }
-        .info {
-            margin-top: 5px;
-            .name, .handle {
-                margin: 0;
-            }
+    }
+    .clear { clear: both; }
+    .add {
+        h1 {
+            margin: 0;
+        }
+        textarea#annotation {
+            width: 100%;
+            height: 100px;
+            margin: 20px 0;
+        }
+        button {
+            background: #3498db;
+            border: none;
+            border-radius: 0;
+            padding: 14px;
+            font-size: 20px;
+            color: white;
         }
     }
+
 }
 
 .function.save { background-position: -5px top; }
