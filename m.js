@@ -1,4 +1,10 @@
 if (Meteor.isClient) {
+  Meteor.Router.add({
+    '/': 'newFile',
+    '/new': 'newFile',
+    '/show/:id': 'show'
+  });
+
   // enable {{loginButtons}}
   Accounts.ui.config({
     requestPermissions: {
@@ -9,31 +15,25 @@ if (Meteor.isClient) {
 
   Template.newFile.events({
     'click #submit-new-file' : function(ev, page) {
-      var $textbox = page.find('textarea');
+      var textbox = page.find('textarea');
       var file = $(textbox).val();
       File.insert({ 'file' : file, shared: [], author: Meteor.userId }, function(error, result) {
         if (error) {
           alert('An unknown error occurred');
         } else {
-          console.log(result);
-          Session.set('viewing', result._id);
-          $(textbox).val('');
+          console.log("going to", result);
+          Meteor.Router.to('/show/' + result);
         }
       });
     }
   })
 
-  Meteor.Router.add({
-    '/': 'newFile',
-    '/new': 'newFile',
-    '/show/:id': function(id) {
-      Session.set('fileID', id);
-      return 'show'
-    }
-  });
-
   Template.sources.viewing = function() {
     return Session.get('viewing') ? true : false;
+  }
+
+  Template.show.currentFile = function() {
+    return File.find(id).fetch()[0];
   }
 
   Template.sources.userSources = function() {

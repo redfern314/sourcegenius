@@ -10,7 +10,7 @@
 				<div class="row">
 				    <div class="col-md-12">
 				        <ul class="actions">
-				            <li><span class="glyphicon glyphicon-plus"></span></li>
+				            <li><a href="/new"><span class="glyphicon glyphicon-plus"></span></a></li>
 				            <li>
 								{{#if loggedIn }}
 								{{> sources }}
@@ -45,7 +45,7 @@
 <template name="newFile">
     <div class="row newFile">
     	<div class="col-md-12">
-			<textarea width='500'></textarea>
+			<textarea width='500' class="language-any"></textarea>
 			<button class='btn' id='submit-new-file'>Submit</button>
     	</div>
     </div>
@@ -77,6 +77,8 @@
 <template name="show">
 	<div class="row">
 	    <div class="col-md-12 code-container">
+
+	    	{{file.file}}
 	        
 	        <div class="snippet">
 	            <div class="line annotated">

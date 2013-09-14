@@ -32,6 +32,29 @@ header {
 .newFile {
     textarea {
         width: 100%;
+        height: 500px;
+        background: @black;
+        color: white;
+        text-shadow: 0 1px rgba(0,0,0,0.3);
+        font-family: Consolas, Monaco, 'Andale Mono', monospace;
+        direction: ltr;
+        text-align: left;
+        white-space: pre;
+        word-spacing: normal;
+        
+        -moz-tab-size: 4;
+        -o-tab-size: 4;
+        tab-size: 4;
+        
+        -webkit-hyphens: none;
+        -moz-hyphens: none;
+        -ms-hyphens: none;
+        hyphens: none;
+        padding: 10px;
+        &:focus, &:active {
+            border: none;
+            outline: none;
+        }
     }
 }
 
