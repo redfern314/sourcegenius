@@ -95,7 +95,7 @@ header {
         border-radius: 10px;
         .line {
             &:hover {
-                opacity: .8;
+                background: lighten(@black, 10%);
                 cursor: pointer;
                 &:not(.annotated) {
                     pre { background: lighten(@black, 10%); }
@@ -136,51 +136,51 @@ header {
             }
         }
     }
+}
 
-    .annotation {
-        @color: white;
-        background: @color;
+
+.annotations {
+    @color: white;
+    background: @color;
+    position: absolute;
+    z-index: 3;
+    padding: 40px;
+    width: 400px;
+    @border-size: 30px;
+    @border-offset: 30px;
+    margin-top: -(@border-offset + @border-size);
+    &:before {
+        content: " ";
         position: absolute;
-        right: 100px;
-        top: 100px;
-        z-index: 3;
-        padding: 40px;
-        width: 400px;
-        @border-size: 30px;
-        @border-offset: 30px;
-        &:before {
-            content: " ";
-            position: absolute;
-            top: @border-offset;
-            left: -@border-size;
-            border-top: transparent @border-size solid;
-            border-right: white @border-size solid;
-        } 
-        &:after {
-            content: " ";
-            position: absolute;
-            top: @border-size + @border-offset;
-            left: -@border-size;
-            border-top: white @border-size solid;
-            border-left: transparent @border-size solid;
-        }
-        .author {
-            margin-top: 20px;
-            .photo {
-                @size: 75px;
-                img {
-                    margin: auto;
-                    background: @purple;
-                    height: @size;
-                    width: @size;
-                    border-radius: @size / 2;
-                }
+        top: @border-offset;
+        left: -@border-size;
+        border-top: transparent @border-size solid;
+        border-right: white @border-size solid;
+    } 
+    &:after {
+        content: " ";
+        position: absolute;
+        top: @border-size + @border-offset;
+        left: -@border-size;
+        border-top: white @border-size solid;
+        border-left: transparent @border-size solid;
+    }
+    .author {
+        margin-top: 20px;
+        .photo {
+            @size: 75px;
+            img {
+                margin: auto;
+                background: @purple;
+                height: @size;
+                width: @size;
+                border-radius: @size / 2;
             }
-            .info {
-                margin-top: 5px;
-                .name, .handle {
-                    margin: 0;
-                }
+        }
+        .info {
+            margin-top: 5px;
+            .name, .handle {
+                margin: 0;
             }
         }
     }

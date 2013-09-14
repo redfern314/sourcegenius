@@ -37,7 +37,7 @@
         {{#if loggedIn }}
             <img id="propic" alt="Click to sign out" height="50" width="50" src={{ URL }}>
         {{ else }}
-            <a href="#">sign In</a>
+            <a href="#">sign in</a>
         {{/if }}
     </div>
 </template>
@@ -60,21 +60,22 @@
 </template>
 
 <template name="annotations">
-  <div class='info'>
     {{#each annos}}
       {{#isolate}}
         {{> annotation }}
       {{/isolate}}
     {{/each}}
-  </div>
-  <textarea id='annotation' placeholder='Your comment here!'></textarea>
+    <textarea id='annotation' placeholder='Your comment here!'></textarea>
 </template>
 
 <template name="annotation">
     <div class="annotation">
       <div class="content row">
-          <div class="col-md-12">
+          <div class="col-md-10">
               {{ text  }}      
+          </div>
+          <div class="col-mid-2" style='text-align:right;'>
+            
           </div>
       </div>
       <div class="author row">
@@ -93,16 +94,15 @@
     <div class="col-md-12 code-container">
         <div class="snippet">
             {{#each splitLines}}
-                <div class="line {{this.isAnnotated}}" data-id="{{this.index}}">
+                <div class="line{{this.isAnnotated}}" data-id="{{this.index}}">
                     <pre class="language-{{this.language}}"><code class='language-{{this.language}}'>{{this.text}}</code></pre>
                 </div>
             {{/each}}
         </div>
-    </div>
+	</div>
     <div class='annotations' style='display:none;'>
       {{> annotations}}
     </div>
-	</div>
 </template>
 
 <template name="signIn">
@@ -127,11 +127,3 @@
   {{/if }}
 </template>
 
-<template name="userSourceTemplate">
-</template>
-
-<template name="sharedSourceTemplate">
-</template>
-
-<template name="currentSource">
-</template>

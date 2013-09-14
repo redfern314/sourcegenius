@@ -37,7 +37,7 @@ if (Meteor.isClient) {
 
     $(document).click(function() {
       console.log("removing");
-      $(".annotations").slideUp(200).find('.info').empty();
+      $(".annotations").hide();
       Session.set('annotations', false);
     });
 
@@ -49,29 +49,33 @@ if (Meteor.isClient) {
 
     Template.show.events({
       'click .line' : function(ev) {
-        $(".annotations").slideDown(200);
-        $target = $(ev.target);
-        while ( !$target.hasClass('line') ) {
-          $target= $($target.parent());
-        }
+        $(".annotations").show();
+        $target = $(ev.target).parents('.line');
         var lineId = $target.data('id');
         Session.set('lineAnnotationNumber', lineId);
+
+        var $line = $target.find('code');
+
+        $('.annotations').css({
+          top: $line.offset().top + $line.height() / 2,
+          left: $line.position().left + $line.width() + 100,
+          overflow: "display"
+        })
+
         ev.stopPropagation();
       },
       'keydown #annotation' : function(ev) {
         var keyCode = ev.keyCode || ev.which;
         if ( keyCode == 13 ) {
-          var annotationText = $("#annotation").val();
           Annotations.insert({ 
             author: Meteor.user(), 
             file: Session.get('fileID'),
             line: Session.get('lineAnnotationNumber'),
-            text: annotationText
+            text: $("#annotation").val()
           }, function(error, result) {
             if (error) {
               alert("An unknown error has occurred");
             } else {
-              console.log("SUCCESS INSERTING ANNOTATION", result); 
               $("#annotation").val('');
               ev.preventDefault();
               ev.stopPropagation();
@@ -83,37 +87,10 @@ if (Meteor.isClient) {
 
     Template.annotations.annos = function() {
       return Annotations.find({
-                'line': Session.get('lineAnnotationNumber'), 
-                'file': Session.get('fileID')
-              }).fetch();
+        'line': Session.get('lineAnnotationNumber'), 
+        'file': Session.get('fileID')
+      }).fetch();
     }
-
-    Template.user.events({
-      'click #user' : function(ev, page) {
-        var loggedIn = Session.get("loggedIn");
-        if(loggedIn) {
-          Session.set("loggedIn",false);
-        } else {
-          Meteor.loginWithGithub({
-            requestPermissions: ['user', 'public_repo']
-          }, function (err) {
-            if (err) {
-              Session.set('errorMessage', err.reason || 'Unknown error');
-            } else {
-              // get the user's avatar
-              HTTP.call("GET", "https://api.github.com/user?access_token="+
-                Meteor.user().services.github.accessToken,
-                function (error, result) {
-                  if (result.statusCode === 200) {
-                    Session.set("propic", result.data.avatar_url);
-                    Session.set("loggedIn",true);
-                  }
-              });
-            }
-          });
-        }
-      }
-    })
 
   SessionAmplify = _.extend({}, Session, {
     keys: _.object(_.map(amplify.store(), function(value, key) {
@@ -154,6 +131,8 @@ if (Meteor.isClient) {
                 if (result.statusCode === 200) {
                   SessionAmplify.set("propic", result.data.avatar_url);
                   SessionAmplify.set("loggedIn",true);
+                  Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.propic":result.data.avatar_url}})
+                  Meteor.users.update({_id:Meteor.user()._id}, {$set:{"profile.username":Meteor.user().services.github.username}})
                 }
             });
           }
@@ -185,7 +164,7 @@ if (Meteor.isClient) {
                 'line': resultsArray.length, 
                 'file': Session.get('fileID')
               }).fetch().length > 0) {
-          isAnnotated = "annotated";
+          isAnnotated = " annotated";
         }
     		resultsArray.push({text: line, index: resultsArray.length, language: file.language, isAnnotated: isAnnotated});
     	});
@@ -225,5 +204,18 @@ if (Meteor.isServer) {
       clientId: process.env.GITHUB_ID,
       secret: process.env.GITHUB_SECRET
     });
+
+    Meteor.users.allow({
+      update: function (userId, user, fields, modifier) {
+        // can only change your own documents
+        if(user._id === userId)
+        {
+          Meteor.users.update({_id: userId}, modifier);
+          return true;
+        }
+        else return false;
+      }
+    });
+
   });
 }
