@@ -112,9 +112,11 @@
             {{/each}}
         </div>
 	</div>
-    <div class='annotations' style='display:none;'>
-      {{> annotations}}
-    </div>
+    {{#isolate}}
+      <div class='annotations' style='display:none;'>
+        {{> annotations}}
+      </div>
+    {{/isolate}}
 </template>
 
 <template name="signIn">

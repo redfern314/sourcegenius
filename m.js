@@ -67,12 +67,14 @@ if (Meteor.isClient) {
 
         $target.find('pre').addClass('selected');
 
-        $('.annotations').css({
+        Session.set('Source.Annotation.annoCSS', {
           top: $line.offset().top + $line.height() / 2,
           left: $container.position().left + $container.width(),
           overflow: "display",
           width: $(window).width() - $container.offset().left - $container.width()
-        })
+        });
+
+        $('.annotations').css(Session.get('Source.Annotation.annoCSS'));
 
         ev.stopPropagation();
       },
@@ -89,6 +91,7 @@ if (Meteor.isClient) {
               alert("An unknown error has occurred");
             } else {
               $("#annotation").val('');
+              $('.annotations').show().css(Session.get('Source.Annotation.annoCSS'));;
               ev.preventDefault();
               ev.stopPropagation();
             }
