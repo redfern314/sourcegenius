@@ -2,9 +2,27 @@
 
 @purple: #9b59b6;
 @black: #272822;
+@gray: #bdc3c7;
 
 body {
     background: @purple;
+}
+
+header {
+    ul.actions {
+        padding: 10px;
+        list-style: none;
+        float: right;
+        li {
+            span {
+                color: lighten(@purple, 10%);
+                cursor: pointer;
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+    }    
 }
 
 .code-container {
@@ -18,7 +36,7 @@ body {
                 opacity: .8;
                 cursor: pointer;
                 &:not(.annotated) {
-                   pre { background: lighten(@black, 10%); }
+                    pre { background: lighten(@black, 10%); }
                 }
             }
             &.annotated {
@@ -75,8 +93,8 @@ body {
             left: -@border-size;
             border-top: transparent @border-size solid;
             border-right: white @border-size solid;
-       } 
-       &:after {
+        } 
+        &:after {
             content: " ";
             position: absolute;
             top: @border-size + @border-offset;

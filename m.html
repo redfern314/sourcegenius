@@ -1,32 +1,24 @@
 <head>
-  <title>m</title>
+  <title>Source Genius</title>
 </head>
 
 <body>
-    <div class="row">
-        <div class="container code-container">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="annotation">
-                    <div class="content row">
-                        <div class="col-md-12">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.        
-                        </div>
-                    </div>
-                    <div class="author row">
-                        <div class="photo col-md-4">
-                            <img src="http://placekitten.com/75/75" alt="">
-                        </div>
-                        <div class="info col-md-8">
-                            <h2 class="name">Jesse Pollak</h2>
-                            <h3 class="handle">jessepollak</h3>
-                        </div>
-                    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <header>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="actions">
+                        <li><span class="glyphicon glyphicon-plus"></span></li>
+                    </ul>
                 </div>
+            </div>
+
+          </header>
+          <div class="row">
+            <div class="col-md-12 code-container">
+                
                 <div class="snippet">
                     <div class="line annotated">
                         <pre><code class="language-javascript">Template.hello.greeting = function () {</code></pre>
@@ -41,27 +33,55 @@
                         </pre>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-  {{ loginButtons }}
-  {{> newSource}}
+              </div>
+          </div>
+          {{ loginButtons }}
+          {{> newSource}}
 
-  <div class='test-triangle'>
-  </div>
+          <div class='test-triangle'>
+          </div>
+          
+        </div>
+      </div>
+    </div>
 </body>
 
 <template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  {{loginButtons}}
-  <input type="button" value="Click" />
+    <h1>Hello World!</h1>
+    {{greeting}}
+    {{loginButtons}}
+    <input type="button" value="Click" />
 </template>
 
 <template name="newSource">
-  <div>
-    <h1>Add new source code</h1>
-    <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
-    <button class='btn' id='submit-new-source'>Submit</button>
-  </div>
+    <div>
+         <h1>Add new source code</h1>
+         <textarea placeholder='std::cout >> "HELLOW WORLD" >> endl; ' width='500'></textarea><br />
+         <button class='btn' id='submit-new-source'>Submit</button>
+    </div>
 </template>
+
+<template name="annotation">
+    <div class="annotation">
+	    <div class="content row">
+	        <div class="col-md-12">
+	            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+	            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.        
+	        </div>
+	    </div>
+	    <div class="author row">
+	        <div class="photo col-md-4">
+	            <img src="http://placekitten.com/75/75" alt="">
+	        </div>
+	        <div class="info col-md-8">
+	            <h2 class="name">Jesse Pollak</h2>
+	            <h3 class="handle">jessepollak</h3>
+	        </div>
+	    </div>
+	</div>
+</template>
+

@@ -1,7 +1,7 @@
 {
   "packages": {
     "bootstrap3-less": {},
-    "prismjs": {}
+    "prismjs": {},
     "router": {}
   }
 }
