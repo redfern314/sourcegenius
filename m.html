@@ -82,11 +82,12 @@
 <template name="newFile">
     <div class="row newFile">
     	<div class="col-md-12">
-            <input style='width:100%; margin-bottom:10px;' id='title' place='Title Your Source'></input>
+            <input style='width:100%; margin-bottom:10px;' id='title' placeholder='Add a title'></input>
             <div class="text-container">
-                <textarea width='500' class="language-any" id="newFileEntry"></textarea>
-                <div class="function save enabled" id='submit-new-file'></div>
+                <textarea width='500' class="language-any" id="newFileEntry" placeholder="Paste your code here"></textarea>
             </div>
+
+            <div class="function save enabled" id='submit-new-file'></div>
     	</div>
     </div>
 </template>
@@ -98,10 +99,6 @@
       {{/isolate}}
     {{/each}}
     <div class="add">
-        {{#if hasAnnotations }}
-        {{else}}
-        <h1>Add an annotation</h1>
-        {{/if }}
         <textarea id='annotation' placeholder="Add a new comment"></textarea>
         <button id="annotateBtn" type="button" class="btn btn-default btn-block b">annotate</button>
     </div>
