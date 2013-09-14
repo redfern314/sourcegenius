@@ -31,7 +31,7 @@ if (Meteor.isClient) {
         File.insert({ 
           'file' : $.trim(file), 
           shared: [], 
-          author: Meteor.userId, 
+          author: Meteor.userId(), 
           language: language,
           title: title
         }, function(error, result) {
@@ -203,13 +203,20 @@ if (Meteor.isClient) {
     }
   })
 
+  Template.sourceSynopsisTemplate.prettifyTitle = function(title) {
+    return title ? title : 'untitled'
+  }
+
+  Template.sourceSynopsisTemplate.authorName = function(id) {
+    return Meteor.users.find(id).fetch()[0].profile.username;
+  }
 
   Template.user.URL = function() {
     return SessionAmplify.get('propic');
   }
 
   Template.user.loggedIn = function() {
-    return SessionAmplify.get("loggedIn");
+    return Meteor.userId();
   }
 
   Template.show.splitLines = function() {
