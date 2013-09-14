@@ -154,6 +154,14 @@ if (Meteor.isClient) {
       return SessionAmplify.get("loggedIn");
     }
 
+    Template.sourceSynopsisTemplate.prettifyTitle = function(title) {
+      return title ? title : 'untitled'
+    }
+
+   Template.sourceSynopsisTemplate.authorName = function(id) {
+     return Meteor.users.find(id).fetch()[0].profile.username;
+   }
+
     Template.home.creatingNewFile = function() {
       return Session.get('creatingNewFile');
     }
